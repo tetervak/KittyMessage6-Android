@@ -19,7 +19,7 @@
         android:label="output_fragment"
         tools:layout="@layout/output_fragment" >
         <argument
-            android:name="envelopeId"
+            android:name="envelopeKey"
             app:argType="long" />
     </fragment>
 </navigation>
