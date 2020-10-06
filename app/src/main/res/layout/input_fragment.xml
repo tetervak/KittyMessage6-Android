@@ -12,11 +12,6 @@
 
     tools:context=".ui.input.InputFragment">
 
-    <TextView
-        android:id="@+id/input_fragment_label"
-        android:text="@string/input_fragment_label"
-        style="@style/fragment_label" />
-
     <Space
         android:layout_width="match_parent"
         android:layout_height="0dp"

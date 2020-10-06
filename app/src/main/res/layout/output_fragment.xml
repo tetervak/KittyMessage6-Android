@@ -9,11 +9,6 @@
     android:gravity="center_horizontal"
     tools:context=".ui.output.OutputFragment">
 
-    <TextView
-        android:id="@+id/output_fragment_label"
-        android:text="@string/output_fragment_label"
-        style="@style/fragment_label" />
-
     <Space
         android:layout_width="match_parent"
         android:layout_height="0dp"
