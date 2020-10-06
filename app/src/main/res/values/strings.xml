@@ -1,12 +1,36 @@
 <resources>
     <string name="app_name">KittyMessage6</string>
     <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <!-- about dialog -->
+    <string name="about">About</string>
+    <string name="author">Alex Tetervak, Sheridan College, 2019</string>
+
+    <!-- radio button labels / output strings -->
+    <string name="cat_purr">Purr</string>
+    <string name="cat_mew">Mew</string>
+    <string name="cat_hiss">Hiss</string>
+
+    <!-- urgent / not urgent -->
+    <string name="urgent">Urgent</string>
+    <string name="not_urgent">Not Urgent</string>
+
+    <!-- input / output labels -->
+    <string name="select_message">Select a message</string>
+    <string name="message_label">Received message</string>
+    <string name="undefined">Undefined</string>
+
+    <!-- button labels -->
+    <string name="reset">Reset</string>
+    <string name="send">Send</string>
+    <string name="back">Back</string>
+
+    <!-- floating label -->
+    <string name="sheridan">Sheridan, 2020</string>
+
+    <!-- activity & fragment labels -->
+    <string name="input_fragment_label">Input Fragment</string>
+    <string name="output_fragment_label">Output Fragment</string>
+    <string name="main_activity_label">Main Activity</string>
+
 </resources>
