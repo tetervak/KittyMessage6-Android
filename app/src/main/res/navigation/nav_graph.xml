@@ -9,4 +9,9 @@
         android:name="ca.tetervak.kittymessage6.ui.input.InputFragment"
         android:label="input_fragment"
         tools:layout="@layout/input_fragment" />
+    <fragment
+        android:id="@+id/outputFragment"
+        android:name="ca.tetervak.kittymessage6.ui.output.OutputFragment"
+        android:label="output_fragment"
+        tools:layout="@layout/output_fragment" />
 </navigation>
