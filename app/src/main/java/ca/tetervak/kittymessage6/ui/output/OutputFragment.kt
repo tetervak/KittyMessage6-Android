@@ -7,23 +7,32 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import ca.tetervak.kittymessage6.R
+import ca.tetervak.kittymessage6.databinding.FragmentOutputBinding
+import ca.tetervak.kittymessage6.model.Envelope
 
 class OutputFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = OutputFragment()
-    }
-
-    //private lateinit var viewModel: OutputViewModel
+    private lateinit var binding: FragmentOutputBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.output_fragment, container, false)
+        // Inflate the layout for this fragment
+        binding = FragmentOutputBinding.inflate(inflater, container, false)
+
+
+
+        return binding.root
     }
 
+    private fun showInput(){
+        val action = OutputFragmentDirections.actionOutputToInput()
+        findNavController().navigate(action)
+    }
 
 
 }

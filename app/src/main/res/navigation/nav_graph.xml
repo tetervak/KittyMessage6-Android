@@ -8,7 +8,7 @@
         android:id="@+id/inputFragment"
         android:name="ca.tetervak.kittymessage6.ui.input.InputFragment"
         android:label="input_fragment"
-        tools:layout="@layout/input_fragment" >
+        tools:layout="@layout/fragment_input" >
         <action
             android:id="@+id/action_input_to_output"
             app:destination="@id/outputFragment" />
@@ -17,9 +17,12 @@
         android:id="@+id/outputFragment"
         android:name="ca.tetervak.kittymessage6.ui.output.OutputFragment"
         android:label="output_fragment"
-        tools:layout="@layout/output_fragment" >
+        tools:layout="@layout/fragment_output" >
         <argument
             android:name="envelopeKey"
             app:argType="long" />
+        <action
+            android:id="@+id/action_output_to_input"
+            app:destination="@id/inputFragment" />
     </fragment>
 </navigation>
