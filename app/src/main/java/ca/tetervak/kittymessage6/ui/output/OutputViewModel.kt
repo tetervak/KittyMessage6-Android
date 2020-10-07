@@ -14,7 +14,7 @@ class OutputViewModel(
     private val envelopeDao: EnvelopeDao =
         EnvelopeDatabase.getInstance(application).envelopeDao
 
-    fun receive(): LiveData<Envelope>{
-        return envelopeDao.get(envelopeKey)
-    }
+    val mailbox: LiveData<Envelope>
+    get() = envelopeDao.get(envelopeKey)
+
 }

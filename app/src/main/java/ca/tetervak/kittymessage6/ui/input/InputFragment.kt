@@ -47,6 +47,11 @@ class InputFragment : Fragment() {
         viewModel.send(Envelope(0, isUrgent, textMessage))
     }
 
+    override fun onStop() {
+        super.onStop()
+        viewModel.reset()
+    }
+
     private fun showOutput(envelopeId: Long) {
 
         val action = InputFragmentDirections.actionInputToOutput(envelopeId)

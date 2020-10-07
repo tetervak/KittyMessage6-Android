@@ -26,7 +26,7 @@ class OutputFragment : Fragment() {
         val factory = OutputViewModelFactory(safeArgs.envelopeKey, application)
         val viewModel: OutputViewModel by viewModels { factory }
 
-        viewModel.receive().observe(viewLifecycleOwner){
+        viewModel.mailbox.observe(viewLifecycleOwner){
             binding.envelope = it
         }
 

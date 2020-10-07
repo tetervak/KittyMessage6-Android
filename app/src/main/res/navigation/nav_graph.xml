@@ -7,8 +7,8 @@
     <fragment
         android:id="@+id/inputFragment"
         android:name="ca.tetervak.kittymessage6.ui.input.InputFragment"
-        android:label="input_fragment"
-        tools:layout="@layout/fragment_input" >
+        android:label="@string/input_fragment_label"
+        tools:layout="@layout/fragment_input">
         <action
             android:id="@+id/action_input_to_output"
             app:destination="@id/outputFragment" />
@@ -16,19 +16,25 @@
     <fragment
         android:id="@+id/outputFragment"
         android:name="ca.tetervak.kittymessage6.ui.output.OutputFragment"
-        android:label="output_fragment"
-        tools:layout="@layout/fragment_output" >
+        android:label="@string/output_fragment_label"
+        tools:layout="@layout/fragment_output">
         <argument
             android:name="envelopeKey"
             app:argType="long" />
         <action
             android:id="@+id/action_output_to_input"
-            app:destination="@id/inputFragment" />
+            app:destination="@id/inputFragment"
+            app:popUpTo="@id/inputFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/historyFragment"
         android:name="ca.tetervak.kittymessage6.ui.history.HistoryFragment"
-        android:label="fragment_history"
+        android:label="@string/history_fragment_label"
         tools:layout="@layout/fragment_history" />
-    <action android:id="@+id/action_global_to_history" app:destination="@id/historyFragment" />
+    <action
+        android:id="@+id/action_global_to_history"
+        app:destination="@id/historyFragment"
+        app:popUpTo="@id/inputFragment"
+        app:popUpToInclusive="false" />
 </navigation>
