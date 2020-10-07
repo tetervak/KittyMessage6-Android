@@ -25,4 +25,9 @@
             android:id="@+id/action_output_to_input"
             app:destination="@id/inputFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="ca.tetervak.kittymessage6.ui.history.HistoryFragment"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history" />
 </navigation>

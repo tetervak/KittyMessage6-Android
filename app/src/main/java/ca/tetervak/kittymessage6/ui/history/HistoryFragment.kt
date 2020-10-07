@@ -2,7 +2,6 @@ package ca.tetervak.kittymessage6.ui.history
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
@@ -21,7 +20,7 @@ class HistoryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_history_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_history, container, false)
 
         // Set the adapter
         if (view is RecyclerView) {
