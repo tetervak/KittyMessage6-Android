@@ -9,13 +9,9 @@ import ca.tetervak.kittymessage6.R
 
 import ca.tetervak.kittymessage6.ui.history.dummy.DummyContent.DummyItem
 
-/**
- * [RecyclerView.Adapter] that can display a [DummyItem].
- * TODO: Replace the implementation with code for your data type.
- */
-class MyCatLetterRecyclerViewAdapter(
+class HistoryRecyclerViewAdapter(
     private val values: List<DummyItem>
-) : RecyclerView.Adapter<MyCatLetterRecyclerViewAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<HistoryRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)

@@ -1,32 +1,56 @@
 package ca.tetervak.kittymessage6.ui.input
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import ca.tetervak.kittymessage6.R
+import ca.tetervak.kittymessage6.database.Envelope
+import ca.tetervak.kittymessage6.databinding.FragmentInputBinding
 
 class InputFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = InputFragment()
-    }
-
-    private lateinit var viewModel: InputViewModel
+    private lateinit var binding: FragmentInputBinding
+    private val viewModel: InputViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_input, container, false)
+        // Inflate the layout for this fragment
+        binding = FragmentInputBinding.inflate(inflater, container, false)
+
+        binding.sendButton.setOnClickListener { send() }
+
+        viewModel.envelopeId.observe(viewLifecycleOwner){
+            if(it > 0){
+                showOutput(it)
+            }
+        }
+
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(InputViewModel::class.java)
-        // TODO: Use the ViewModel
+    private fun send(){
+        // get urgent flag value
+        val isUrgent: Boolean = binding.urgentCheckBox.isChecked
+        // get the selected message text
+        val textMessage = when (binding.messageGroup.checkedRadioButtonId) {
+            R.id.purr_button -> getString(R.string.cat_purr)
+            R.id.mew_button -> getString(R.string.cat_mew)
+            R.id.hiss_button -> getString(R.string.cat_hiss)
+            else -> getString(R.string.undefined)
+        }
+        viewModel.send(Envelope(0, isUrgent, textMessage))
+    }
+
+    private fun showOutput(envelopeId: Long) {
+
+        val action = InputFragmentDirections.actionInputToOutput(envelopeId)
+        findNavController().navigate(action)
     }
 
 }

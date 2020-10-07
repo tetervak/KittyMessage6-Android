@@ -6,7 +6,7 @@
     <data>
         <variable
             name="envelope"
-            type="ca.tetervak.kittymessage6.model.Envelope"/>
+            type="ca.tetervak.kittymessage6.database.Envelope"/>
     </data>
 
     <LinearLayout
@@ -34,14 +34,16 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/gap0"
             android:text="@{envelope.isUrgent ? @string/urgent : @string/not_urgent}"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            tools:text="@string/undefined" />
 
         <TextView
             android:id="@+id/message_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{envelope.textMessage}"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            tools:text="@string/undefined" />
 
         <Button
             android:id="@+id/back_button"
