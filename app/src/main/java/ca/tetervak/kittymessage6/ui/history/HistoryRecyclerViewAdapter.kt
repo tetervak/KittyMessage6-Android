@@ -27,7 +27,7 @@ class HistoryRecyclerViewAdapter(private val context: Context) : RecyclerView.Ad
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val envelope = history[position]
-        holder.idView.text = (position + 1).toString()
+        holder.idView.text = "${position + 1}."
         val urgent =
             if(envelope.isUrgent)
                 context.getString(R.string.urgent)
