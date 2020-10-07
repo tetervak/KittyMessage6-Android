@@ -13,7 +13,7 @@ import ca.tetervak.kittymessage6.ui.history.dummy.DummyContent.DummyItem
 
 class HistoryRecyclerViewAdapter(private val context: Context) : RecyclerView.Adapter<HistoryRecyclerViewAdapter.ViewHolder>() {
 
-    var history: List<Envelope> = ArrayList<Envelope>()
+    var history: List<Envelope>? = null
     set(value){
         field = value
         notifyDataSetChanged()
@@ -26,7 +26,7 @@ class HistoryRecyclerViewAdapter(private val context: Context) : RecyclerView.Ad
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val envelope = history[position]
+        val envelope = history!![position]
         holder.idView.text = "${position + 1}."
         val urgent =
             if(envelope.isUrgent)
@@ -37,7 +37,7 @@ class HistoryRecyclerViewAdapter(private val context: Context) : RecyclerView.Ad
 
     }
 
-    override fun getItemCount(): Int = history.size
+    override fun getItemCount(): Int = history?.size ?: 0
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val idView: TextView = view.findViewById(R.id.item_number)
