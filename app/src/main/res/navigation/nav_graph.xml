@@ -30,4 +30,5 @@
         android:name="ca.tetervak.kittymessage6.ui.history.HistoryFragment"
         android:label="fragment_history"
         tools:layout="@layout/fragment_history" />
+    <action android:id="@+id/action_global_to_history" app:destination="@id/historyFragment" />
 </navigation>
