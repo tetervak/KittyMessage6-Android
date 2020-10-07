@@ -26,12 +26,6 @@ class MainActivity : AppCompatActivity() {
             Navigation.findNavController(this, R.id.nav_host)
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         toolbar.setupWithNavController(navController, appBarConfiguration)
-
-
-        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
