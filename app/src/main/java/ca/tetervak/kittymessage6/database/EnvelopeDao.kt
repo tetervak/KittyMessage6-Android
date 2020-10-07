@@ -14,7 +14,7 @@ interface EnvelopeDao {
     @Query("SELECT * FROM envelopes WHERE id=:key")
     fun get(key: Long) : LiveData<Envelope>
 
-    @Query("SELECT * FROM envelopes")
+    @Query("SELECT * FROM envelopes ORDER BY id")
     fun getAll() : LiveData<List<Envelope>>
 
     @Query("DELETE FROM envelopes")

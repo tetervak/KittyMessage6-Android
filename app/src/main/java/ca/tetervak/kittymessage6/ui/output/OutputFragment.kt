@@ -23,7 +23,7 @@ class OutputFragment : Fragment() {
         // get the view model
         val safeArgs: OutputFragmentArgs by navArgs()
         val application = requireActivity().application
-        val factory = OutputViewModelFactory(safeArgs.envelopeKey, application)
+        val factory = OutputViewModelFactory(safeArgs.envelopeId, application)
         val viewModel: OutputViewModel by viewModels { factory }
 
         viewModel.mailbox.observe(viewLifecycleOwner){
