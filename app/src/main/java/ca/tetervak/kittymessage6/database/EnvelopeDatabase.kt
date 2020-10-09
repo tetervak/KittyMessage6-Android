@@ -23,7 +23,7 @@ abstract class EnvelopeDatabase: RoomDatabase(){
                     instance = Room.databaseBuilder(
                         context.applicationContext,
                         EnvelopeDatabase::class.java,
-                        "envelop_database"
+                        "envelope_database"
                     ).fallbackToDestructiveMigration().build()
 
                     INSTANCE = instance
