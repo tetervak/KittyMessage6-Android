@@ -3,12 +3,9 @@ package ca.tetervak.kittymessage6.ui.history
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.fragment.app.viewModels
 import ca.tetervak.kittymessage6.R
-import ca.tetervak.kittymessage6.ui.history.dummy.DummyContent
-import ca.tetervak.kittymessage6.ui.input.InputViewModel
 
 /**
  * A fragment representing a list of Items.

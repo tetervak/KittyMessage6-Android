@@ -12,11 +12,11 @@ import kotlinx.coroutines.launch
 
 class InputViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _envelopeId = MutableLiveData<Long>().apply{
-        value = 0L
+    private val _envelopeId = MutableLiveData<Long?>().apply{
+        value = null
     }
 
-    val envelopeId: LiveData<Long>
+    val envelopeId: LiveData<Long?>
     get() = _envelopeId
 
     private val envelopeDao: EnvelopeDao =
@@ -29,6 +29,6 @@ class InputViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun reset(){
-        _envelopeId.value = 0L
+        _envelopeId.value = null
     }
 }

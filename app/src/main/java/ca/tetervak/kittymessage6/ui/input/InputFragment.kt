@@ -26,9 +26,7 @@ class InputFragment : Fragment() {
         binding.sendButton.setOnClickListener { send() }
 
         viewModel.envelopeId.observe(viewLifecycleOwner){
-            if(it > 0){
-                showOutput(it)
-            }
+            if(it is Long) showOutput(it)
         }
 
         return binding.root
@@ -47,12 +45,9 @@ class InputFragment : Fragment() {
         viewModel.send(Envelope(0, isUrgent, textMessage))
     }
 
-    override fun onStop() {
-        super.onStop()
-        viewModel.reset()
-    }
-
     private fun showOutput(envelopeId: Long) {
+
+        viewModel.reset() // prevents going more than once
 
         val action = InputFragmentDirections.actionInputToOutput(envelopeId)
         findNavController().navigate(action)
