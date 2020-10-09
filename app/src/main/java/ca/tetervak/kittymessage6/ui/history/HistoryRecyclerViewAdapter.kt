@@ -9,8 +9,6 @@ import android.widget.TextView
 import ca.tetervak.kittymessage6.R
 import ca.tetervak.kittymessage6.database.Envelope
 
-import ca.tetervak.kittymessage6.ui.history.dummy.DummyContent.DummyItem
-
 class HistoryRecyclerViewAdapter(private val context: Context) : RecyclerView.Adapter<HistoryRecyclerViewAdapter.ViewHolder>() {
 
     var history: List<Envelope>? = null
