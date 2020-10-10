@@ -16,8 +16,7 @@ class InputViewModel(application: Application) : AndroidViewModel(application) {
         value = null
     }
 
-    val envelopeId: LiveData<Long?>
-    get() = _envelopeId
+    val envelopeId: LiveData<Long?> = _envelopeId
 
     private val envelopeDao: EnvelopeDao =
         EnvelopeDatabase.getInstance(application).envelopeDao
