@@ -5,6 +5,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.DividerItemDecoration
 import ca.tetervak.kittymessage6.R
 
 /**
@@ -26,9 +27,12 @@ class HistoryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_history, container, false)
+        val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view)
+
+        recyclerView.addItemDecoration(
+            DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL))
 
         // Set the adapter
-        val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view)
         adapter = HistoryRecyclerViewAdapter(view.context)
         recyclerView.adapter = adapter
 
@@ -46,7 +50,7 @@ class HistoryFragment : Fragment() {
         return when (item.itemId) {
             R.id.action_clear -> {
                 viewModel.clear()
-                return true
+                true
             }
             else -> super.onOptionsItemSelected(item)
         }

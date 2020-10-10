@@ -35,4 +35,7 @@
     <string name="output_fragment_label">Output</string>
     <string name="history_fragment_label">History</string>
 
+    <!-- the recycler view -->
+    <string name="count">%1$d.</string>
+
 </resources>

@@ -3,11 +3,10 @@ package ca.tetervak.kittymessage6.ui.history
 import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import ca.tetervak.kittymessage6.R
 import ca.tetervak.kittymessage6.database.Envelope
+import ca.tetervak.kittymessage6.databinding.FragmentHistoryItemBinding
 
 class HistoryRecyclerViewAdapter(private val context: Context) : RecyclerView.Adapter<HistoryRecyclerViewAdapter.ViewHolder>() {
 
@@ -18,31 +17,32 @@ class HistoryRecyclerViewAdapter(private val context: Context) : RecyclerView.Ad
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.fragment_history_item, parent, false)
-        return ViewHolder(view)
+        return ViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val envelope = history!![position]
-        holder.idView.text = "${position + 1}."
-        val urgent =
-            if(envelope.isUrgent)
-                context.getString(R.string.urgent)
-            else
-                context.getString(R.string.not_urgent)
-        holder.contentView.text = "$urgent ${envelope.textMessage}"
-
+        holder.bind(position + 1, history!![position])
     }
 
     override fun getItemCount(): Int = history?.size ?: 0
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val idView: TextView = view.findViewById(R.id.item_number)
-        val contentView: TextView = view.findViewById(R.id.content)
+    class ViewHolder private constructor(
+        private val binding: FragmentHistoryItemBinding) : RecyclerView.ViewHolder(binding.root){
 
-        override fun toString(): String {
-            return super.toString() + " '" + contentView.text + "'"
+        fun bind(count: Int, envelope: Envelope) {
+            binding.count.text = binding.root.context.getString(R.string.count, count)
+            binding.envelope = envelope
+            binding.executePendingBindings()
+        }
+
+        companion object {
+            fun from(parent: ViewGroup): ViewHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = FragmentHistoryItemBinding.inflate(layoutInflater, parent, false)
+                return ViewHolder(binding)
+            }
         }
     }
+
+
 }
