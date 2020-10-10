@@ -14,8 +14,7 @@ class HistoryViewModel(application: Application) : AndroidViewModel(application)
     private val envelopeDao: EnvelopeDao =
         EnvelopeDatabase.getInstance(application).envelopeDao
 
-    val history: LiveData<List<Envelope>>
-    get() = envelopeDao.getAll()
+    val history: LiveData<List<Envelope>> = envelopeDao.getAll()
 
     fun clear(){
         viewModelScope.launch {
