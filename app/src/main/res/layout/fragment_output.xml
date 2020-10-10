@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="envelope"
-            type="ca.tetervak.kittymessage6.database.Envelope"/>
+            name="viewModel"
+            type="ca.tetervak.kittymessage6.ui.output.OutputViewModel"/>
     </data>
 
     <LinearLayout
@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/gap0"
-            android:text="@{envelope.isUrgent ? @string/urgent : @string/not_urgent}"
+            android:text="@{viewModel.mailbox.urgent ? @string/urgent : @string/not_urgent}"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             tools:text="@string/undefined" />
 
@@ -41,7 +41,7 @@
             android:id="@+id/message_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{envelope.textMessage}"
+            android:text="@{viewModel.mailbox.textMessage}"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             tools:text="@string/undefined" />
 

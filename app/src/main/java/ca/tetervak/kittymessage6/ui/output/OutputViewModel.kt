@@ -8,13 +8,12 @@ import ca.tetervak.kittymessage6.database.EnvelopeDao
 import ca.tetervak.kittymessage6.database.EnvelopeDatabase
 
 class OutputViewModel(
-    private val envelopeKey: Long,
-    application: Application) : AndroidViewModel(application) {
+    envelopeKey: Long, application: Application
+) : AndroidViewModel(application) {
 
     private val envelopeDao: EnvelopeDao =
         EnvelopeDatabase.getInstance(application).envelopeDao
 
-    val mailbox: LiveData<Envelope>
-    get() = envelopeDao.get(envelopeKey)
+    val mailbox: LiveData<Envelope> = envelopeDao.get(envelopeKey)
 
 }
