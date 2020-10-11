@@ -11,10 +11,10 @@ class DateTimeStamp {
         private val formatterDate =
             DateTimeFormatter.ofPattern("EEEE, MMMM dd, yyyy")
 
-        private val formatterTime = DateTimeFormatter.ofPattern("h:m:s a")
+        private val formatterTime = DateTimeFormatter.ofPattern("h:mm:s a")
 
         private val formatterDateTime =
-            DateTimeFormatter.ofPattern("EEE, MMM dd, yyyy - h:m a")
+            DateTimeFormatter.ofPattern("EEE, MMM dd, yyyy - h:mm a")
 
         // had to annotate with @JvmStatic to use them in the binding
 
