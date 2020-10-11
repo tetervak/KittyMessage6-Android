@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import ca.tetervak.kittymessage6.R
 import ca.tetervak.kittymessage6.database.Envelope
 import ca.tetervak.kittymessage6.databinding.FragmentInputBinding
+import java.util.*
 
 class InputFragment : Fragment() {
 
@@ -42,7 +43,7 @@ class InputFragment : Fragment() {
             R.id.hiss_button -> getString(R.string.cat_hiss)
             else -> getString(R.string.undefined)
         }
-        viewModel.send(Envelope(0, isUrgent, textMessage))
+        viewModel.send(Envelope(0, isUrgent, textMessage, Date()))
     }
 
     private fun showOutput(envelopeId: Long) {

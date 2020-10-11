@@ -9,6 +9,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import ca.tetervak.kittymessage6.databinding.FragmentOutputBinding
+import ca.tetervak.kittymessage6.util.DateTimeStamp
+import java.util.*
 
 class OutputFragment : Fragment() {
 
