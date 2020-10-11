@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 
 class MainActivity : AppCompatActivity() {
@@ -39,6 +40,9 @@ class MainActivity : AppCompatActivity() {
             R.id.action_history -> {
                 findNavController(R.id.nav_host).navigate(R.id.action_global_to_history)
                 true
+            }
+            R.id.about_dialog -> {
+                NavigationUI.onNavDestinationSelected(item, findNavController(R.id.nav_host))
             }
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)

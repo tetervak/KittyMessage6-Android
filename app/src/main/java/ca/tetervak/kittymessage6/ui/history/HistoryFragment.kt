@@ -5,8 +5,10 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import ca.tetervak.kittymessage6.R
+import ca.tetervak.kittymessage6.ui.input.InputFragmentDirections
 
 /**
  * A fragment representing a list of Items.
@@ -55,4 +57,5 @@ class HistoryFragment : Fragment() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
 }

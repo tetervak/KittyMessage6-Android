@@ -31,10 +31,18 @@
         android:id="@+id/historyFragment"
         android:name="ca.tetervak.kittymessage6.ui.history.HistoryFragment"
         android:label="@string/history_fragment_label"
-        tools:layout="@layout/fragment_history" />
+        tools:layout="@layout/fragment_history" >
+        <action
+            android:id="@+id/action_history_to_output"
+            app:destination="@id/outputFragment" />
+    </fragment>
     <action
         android:id="@+id/action_global_to_history"
         app:destination="@id/historyFragment"
         app:popUpTo="@id/inputFragment"
         app:popUpToInclusive="false" />
+    <dialog
+        android:id="@+id/about_dialog"
+        android:name="ca.tetervak.kittymessage6.ui.dialogs.AboutFragment"
+        android:label="AboutFragment" />
 </navigation>

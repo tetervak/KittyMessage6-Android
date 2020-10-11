@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import ca.tetervak.kittymessage6.R
 import ca.tetervak.kittymessage6.database.Envelope
 import ca.tetervak.kittymessage6.databinding.FragmentHistoryItemBinding
@@ -32,6 +33,10 @@ class HistoryRecyclerViewAdapter(private val context: Context) : RecyclerView.Ad
         fun bind(count: Int, envelope: Envelope) {
             binding.count.text = binding.root.context.getString(R.string.count, count)
             binding.envelope = envelope
+            binding.root.setOnClickListener {
+                it.findNavController()
+                    .navigate(HistoryFragmentDirections.actionHistoryToOutput(envelope.id))
+            }
             binding.executePendingBindings()
         }
 
