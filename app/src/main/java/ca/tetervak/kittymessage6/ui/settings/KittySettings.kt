@@ -21,4 +21,7 @@ class KittySettings(private val context: Context){
 
     val confirmDelete: Boolean
         get() = preferences.getBoolean("confirm_delete", true)
+
+    val confirmClear: Boolean
+        get() = preferences.getBoolean("confirm_clear", true)
 }

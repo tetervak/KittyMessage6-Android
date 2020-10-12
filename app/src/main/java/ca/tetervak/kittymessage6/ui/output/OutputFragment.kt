@@ -6,7 +6,6 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import ca.tetervak.kittymessage6.R
@@ -73,7 +72,7 @@ class OutputFragment : Fragment() {
                 val settings = KittySettings(requireContext())
                 if(settings.confirmDelete){
                     val action = OutputFragmentDirections.actionOutputToConfirmation(
-                        getString(R.string.confirmation_message), CONFIRM_DELETE)
+                        getString(R.string.confirm_delete_message), CONFIRM_DELETE)
                     navController.navigate(action)
                 } else {
                     delete()

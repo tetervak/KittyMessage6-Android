@@ -33,6 +33,9 @@
         <action
             android:id="@+id/action_history_to_output"
             app:destination="@id/output_fragment" />
+        <action
+            android:id="@+id/action_history_to_confirmation"
+            app:destination="@id/confirmation_dialog" />
     </fragment>
     <action
         android:id="@+id/action_global_to_history"
