@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import ca.tetervak.kittymessage6.R
@@ -20,7 +21,11 @@ class ConfirmationDialog : DialogFragment() {
 
     private val safeArgs: ConfirmationDialogArgs by navArgs()
 
+    private lateinit var navController: NavController
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+
+        navController = findNavController()
 
         return AlertDialog.Builder(requireActivity()).apply {
             setTitle(R.string.app_name)
@@ -31,7 +36,6 @@ class ConfirmationDialog : DialogFragment() {
     }
 
     private fun confirmed() {
-        val navController = findNavController()
         val savedStateHandle = navController.previousBackStackEntry?.savedStateHandle
         savedStateHandle?.set(
             CONFIRMATION_RESULT, ConfirmationResult(safeArgs.requestCode, Activity.RESULT_OK))

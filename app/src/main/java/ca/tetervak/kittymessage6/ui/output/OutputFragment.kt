@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -25,6 +26,8 @@ class OutputFragment : Fragment() {
         OutputViewModelFactory(safeArgs.envelopeId, requireActivity().application)
     }
 
+    private lateinit var navController: NavController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -44,8 +47,10 @@ class OutputFragment : Fragment() {
 
         binding.backButton.setOnClickListener { showInput() }
 
+        navController = findNavController()
+
         // make the delete confirmation dialog work
-        val savedStateHandle = findNavController().currentBackStackEntry?.savedStateHandle
+        val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
         savedStateHandle?.getLiveData<ConfirmationResult>(CONFIRMATION_RESULT)
             ?.observe(viewLifecycleOwner) {
                 if(it.requestCode == CONFIRM_DELETE && it.resultCode == Activity.RESULT_OK){
@@ -66,7 +71,7 @@ class OutputFragment : Fragment() {
             R.id.action_delete -> {
                 val action = OutputFragmentDirections.actionOutputToConfirmation(
                     getString(R.string.confirmation_message), CONFIRM_DELETE)
-                findNavController().navigate(action)
+                navController.navigate(action)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -80,7 +85,7 @@ class OutputFragment : Fragment() {
 
     private fun showInput(){
         val action = OutputFragmentDirections.actionGlobalToInput()
-        findNavController().navigate(action)
+        navController.navigate(action)
     }
 
 
