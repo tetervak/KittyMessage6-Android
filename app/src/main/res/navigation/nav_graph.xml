@@ -42,7 +42,7 @@
         app:popUpTo="@id/input_fragment"/>
     <dialog
         android:id="@+id/about_dialog"
-        android:name="ca.tetervak.kittymessage6.ui.dialogs.AboutFragment"
+        android:name="ca.tetervak.kittymessage6.ui.dialogs.AboutDialog"
         android:label="AboutFragment" />
     <fragment
         android:id="@+id/settings_fragment"

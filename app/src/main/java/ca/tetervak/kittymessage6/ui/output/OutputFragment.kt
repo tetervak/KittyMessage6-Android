@@ -1,18 +1,28 @@
 package ca.tetervak.kittymessage6.ui.output
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import ca.tetervak.kittymessage6.R
 import ca.tetervak.kittymessage6.databinding.FragmentOutputBinding
 import ca.tetervak.kittymessage6.util.DateTimeStamp
 import java.util.*
 
 class OutputFragment : Fragment() {
+
+    private val safeArgs: OutputFragmentArgs by navArgs()
+
+    private val viewModel: OutputViewModel by viewModels {
+        OutputViewModelFactory(safeArgs.envelopeId, requireActivity().application)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,12 +32,6 @@ class OutputFragment : Fragment() {
         val binding =
             FragmentOutputBinding.inflate(inflater, container, false)
 
-        // get the view model
-        val safeArgs: OutputFragmentArgs by navArgs()
-        val application = requireActivity().application
-        val factory = OutputViewModelFactory(safeArgs.envelopeId, application)
-        val viewModel: OutputViewModel by viewModels { factory }
-
         // data-bind the viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
@@ -35,6 +39,22 @@ class OutputFragment : Fragment() {
         binding.backButton.setOnClickListener { showInput() }
 
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_output, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            R.id.action_delete -> {
+                viewModel.delete()
+                showInput()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun showInput(){
