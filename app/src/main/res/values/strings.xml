@@ -48,4 +48,7 @@
     <string name="message_text">Message Text</string>
     <string name="delivery_speed">Delivery Speed</string>
 
+    <!-- confirmation dialog -->
+    <string name="confirmation_message">Do you really want to remove this message?</string>
+
 </resources>
