@@ -36,15 +36,12 @@ class MainActivity : AppCompatActivity() {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_history -> {
-                findNavController(R.id.nav_host).navigate(R.id.action_global_to_history)
-                true
-            }
-            R.id.about_dialog -> {
-                NavigationUI.onNavDestinationSelected(item, findNavController(R.id.nav_host))
-            }
-            R.id.action_settings -> true
+        return NavigationUI.onNavDestinationSelected(item, findNavController(R.id.nav_host)) ||
+            when (item.itemId) {
+                R.id.action_history -> {
+                    findNavController(R.id.nav_host).navigate(R.id.action_global_to_history)
+                    true
+                }
             else -> super.onOptionsItemSelected(item)
         }
     }

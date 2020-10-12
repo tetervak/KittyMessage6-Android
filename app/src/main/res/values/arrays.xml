@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="message_text_entries">
+        <item>Purr</item>
+        <item>Mew</item>
+        <item>Hiss</item>
+    </string-array>
+</resources>

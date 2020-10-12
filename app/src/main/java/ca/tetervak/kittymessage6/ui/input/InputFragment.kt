@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
 import ca.tetervak.kittymessage6.R
 import ca.tetervak.kittymessage6.database.Envelope
 import ca.tetervak.kittymessage6.databinding.FragmentInputBinding
@@ -33,6 +34,13 @@ class InputFragment : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        // set the default message from the settings
+        reset()
+    }
+
     private fun send(){
         // get urgent flag value
         val isUrgent: Boolean = binding.urgentCheckBox.isChecked
@@ -53,5 +61,19 @@ class InputFragment : Fragment() {
         val action = InputFragmentDirections.actionInputToOutput(envelopeId)
         findNavController().navigate(action)
     }
+
+    private fun reset(){
+
+        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+
+        binding.urgentCheckBox.isChecked = preferences.getBoolean("urgent", true)
+
+        when(preferences.getString("message","Mew")){
+            "Purr" -> binding.messageGroup.check(R.id.purr_button)
+            "Mew" -> binding.messageGroup.check(R.id.mew_button)
+            "Hiss" -> binding.messageGroup.check(R.id.hiss_button)
+        }
+    }
+
 
 }
