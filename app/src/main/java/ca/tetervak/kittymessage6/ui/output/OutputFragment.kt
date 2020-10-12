@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import ca.tetervak.kittymessage6.R
@@ -48,7 +49,7 @@ class OutputFragment : Fragment() {
         savedStateHandle?.getLiveData<ConfirmationResult>(CONFIRMATION_RESULT)
             ?.observe(viewLifecycleOwner) {
                 if(it.requestCode == CONFIRM_DELETE && it.resultCode == Activity.RESULT_OK){
-                    viewModel.delete()
+                    delete()
                 }
             }
 
@@ -78,7 +79,7 @@ class OutputFragment : Fragment() {
     }
 
     private fun showInput(){
-        val action = OutputFragmentDirections.actionOutputToInput()
+        val action = OutputFragmentDirections.actionGlobalToInput()
         findNavController().navigate(action)
     }
 

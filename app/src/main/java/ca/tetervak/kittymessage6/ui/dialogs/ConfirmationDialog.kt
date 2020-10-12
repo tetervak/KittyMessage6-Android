@@ -35,8 +35,6 @@ class ConfirmationDialog : DialogFragment() {
         val savedStateHandle = navController.previousBackStackEntry?.savedStateHandle
         savedStateHandle?.set(
             CONFIRMATION_RESULT, ConfirmationResult(safeArgs.requestCode, Activity.RESULT_OK))
-        val action = ConfirmationDialogDirections.actionConfirmationToInput()
-        navController.navigate(action)
     }
 
     data class ConfirmationResult(val requestCode: Int, val resultCode: Int): Serializable

@@ -22,11 +22,6 @@
             android:name="envelopeId"
             app:argType="long" />
         <action
-            android:id="@+id/action_output_to_input"
-            app:destination="@id/input_fragment"
-            app:popUpTo="@id/input_fragment"
-            app:popUpToInclusive="true" />
-        <action
             android:id="@+id/action_output_to_confirmation"
             app:destination="@id/confirmation_dialog" />
     </fragment>
@@ -61,10 +56,10 @@
         <argument
             android:name="requestCode"
             app:argType="integer" />
-        <action
-            android:id="@+id/action_confirmation_to_input"
-            app:destination="@id/input_fragment"
-            app:popUpTo="@id/input_fragment"
-            app:popUpToInclusive="true" />
     </dialog>
+    <action
+        android:id="@+id/action_global_to_input"
+        app:destination="@id/input_fragment"
+        app:popUpTo="@id/input_fragment"
+        app:popUpToInclusive="true" />
 </navigation>
