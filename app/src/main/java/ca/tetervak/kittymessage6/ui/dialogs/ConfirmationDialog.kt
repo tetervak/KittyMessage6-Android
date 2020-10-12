@@ -15,13 +15,12 @@ class ConfirmationDialog : DialogFragment() {
         private const val MESSAGE = "message"
         private const val TAG = "confirmation_dialog"
 
-        fun show(message: String, target: Fragment, requestCode: Int){
-            val fragment = ConfirmationDialog()
-            val arguments = Bundle()
-            arguments.putString(MESSAGE, message)
-            fragment.arguments = arguments
-            fragment.setTargetFragment(target, requestCode)
-            fragment.show(target.parentFragmentManager, TAG)
+        fun show(message: String, target: Fragment, requestCode: Int) {
+            ConfirmationDialog().apply {
+                arguments = Bundle().apply { putString(MESSAGE, message) }
+                setTargetFragment(target, requestCode)
+                show(target.parentFragmentManager, TAG)
+            }
         }
     }
 
