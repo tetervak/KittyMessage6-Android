@@ -29,7 +29,7 @@ class ConfirmationDialog : DialogFragment() {
         val activity = requireActivity()
         val message = arguments?.getString(MESSAGE) ?: ""
 
-        return AlertDialog.Builder(activity).apply{
+        return AlertDialog.Builder(activity).apply {
             setTitle(R.string.app_name)
             setMessage(message)
             setPositiveButton(android.R.string.ok) { _, _ -> confirmed() }
