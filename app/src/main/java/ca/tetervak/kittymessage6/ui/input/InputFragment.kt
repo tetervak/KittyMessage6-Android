@@ -11,6 +11,7 @@ import androidx.preference.PreferenceManager
 import ca.tetervak.kittymessage6.R
 import ca.tetervak.kittymessage6.database.Envelope
 import ca.tetervak.kittymessage6.databinding.FragmentInputBinding
+import ca.tetervak.kittymessage6.ui.settings.KittySettings
 import java.util.Date
 
 class InputFragment : Fragment() {
@@ -38,7 +39,7 @@ class InputFragment : Fragment() {
         super.onResume()
 
         // set the default message from the settings
-        reset()
+        readSettings()
     }
 
     private fun send(){
@@ -62,17 +63,20 @@ class InputFragment : Fragment() {
         findNavController().navigate(action)
     }
 
-    private fun reset(){
+    private fun readSettings(){
 
-        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val settings = KittySettings(requireContext())
 
-        binding.urgentCheckBox.isChecked = preferences.getBoolean("urgent", true)
+        binding.urgentCheckBox.isChecked = settings.urgent
 
-        when(preferences.getString("message","Mew")){
-            "Purr" -> binding.messageGroup.check(R.id.purr_button)
-            "Mew" -> binding.messageGroup.check(R.id.mew_button)
-            "Hiss" -> binding.messageGroup.check(R.id.hiss_button)
-        }
+        binding.messageGroup.check(
+            when(settings.messageText){
+                getString(R.string.cat_purr) -> R.id.purr_button
+                getString(R.string.cat_mew) -> R.id.mew_button
+                getString(R.string.cat_hiss) -> R.id.hiss_button
+                else -> R.id.mew_button
+            }
+        )
     }
 
 

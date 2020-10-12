@@ -5,12 +5,10 @@ import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import ca.tetervak.kittymessage6.R
-import ca.tetervak.kittymessage6.ui.output.OutputFragmentArgs
 import java.io.Serializable
 
 class ConfirmationDialog : DialogFragment() {

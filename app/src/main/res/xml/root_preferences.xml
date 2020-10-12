@@ -8,15 +8,26 @@
             android:key="urgent"
             android:summaryOff="@string/not_urgent"
             android:summaryOn="@string/urgent"
-            android:title="@string/delivery_speed" />
+            android:title="@string/urgent_delivery" />
 
         <ListPreference
-            android:defaultValue="Mew"
+            android:defaultValue="@string/cat_mew"
             android:entries="@array/message_text_entries"
             android:entryValues="@array/message_text_entries"
             android:key="message"
             android:title="@string/message_text"
             app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/dialog_settings">
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="confirm_delete"
+            android:title="@string/confirm_delete_title"
+            android:summaryOn="@string/confirm_delete_on"
+            android:summaryOff="@string/confirm_delete_off"/>
 
     </PreferenceCategory>
 

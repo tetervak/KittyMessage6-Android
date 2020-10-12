@@ -13,6 +13,7 @@ import ca.tetervak.kittymessage6.R
 import ca.tetervak.kittymessage6.databinding.FragmentOutputBinding
 import ca.tetervak.kittymessage6.ui.dialogs.ConfirmationDialog.ConfirmationResult
 import ca.tetervak.kittymessage6.ui.dialogs.ConfirmationDialog.Companion.CONFIRMATION_RESULT
+import ca.tetervak.kittymessage6.ui.settings.KittySettings
 
 class OutputFragment : Fragment() {
 
@@ -69,9 +70,14 @@ class OutputFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.action_delete -> {
-                val action = OutputFragmentDirections.actionOutputToConfirmation(
-                    getString(R.string.confirmation_message), CONFIRM_DELETE)
-                navController.navigate(action)
+                val settings = KittySettings(requireContext())
+                if(settings.confirmDelete){
+                    val action = OutputFragmentDirections.actionOutputToConfirmation(
+                        getString(R.string.confirmation_message), CONFIRM_DELETE)
+                    navController.navigate(action)
+                } else {
+                    delete()
+                }
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -87,6 +93,5 @@ class OutputFragment : Fragment() {
         val action = OutputFragmentDirections.actionGlobalToInput()
         navController.navigate(action)
     }
-
 
 }
