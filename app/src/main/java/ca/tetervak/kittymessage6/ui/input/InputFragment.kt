@@ -11,7 +11,7 @@ import androidx.preference.PreferenceManager
 import ca.tetervak.kittymessage6.R
 import ca.tetervak.kittymessage6.database.Envelope
 import ca.tetervak.kittymessage6.databinding.FragmentInputBinding
-import java.util.*
+import java.util.Date
 
 class InputFragment : Fragment() {
 

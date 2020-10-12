@@ -1,7 +1,6 @@
 package ca.tetervak.kittymessage6.ui.output
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -10,9 +9,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import ca.tetervak.kittymessage6.R
 import ca.tetervak.kittymessage6.databinding.FragmentOutputBinding
-import ca.tetervak.kittymessage6.ui.dialogs.ConfirmationDialog
-import ca.tetervak.kittymessage6.util.DateTimeStamp
-import java.util.*
+import ca.tetervak.kittymessage6.ui.dialogs.ConfirmationDialog.ConfirmationResult
+import ca.tetervak.kittymessage6.ui.dialogs.ConfirmationDialog.Companion.CONFIRMATION_RESULT
 
 class OutputFragment : Fragment() {
 
@@ -45,6 +43,15 @@ class OutputFragment : Fragment() {
 
         binding.backButton.setOnClickListener { showInput() }
 
+        // make the delete confirmation dialog work
+        val savedStateHandle = findNavController().currentBackStackEntry?.savedStateHandle
+        savedStateHandle?.getLiveData<ConfirmationResult>(CONFIRMATION_RESULT)
+            ?.observe(viewLifecycleOwner) {
+                if(it.requestCode == CONFIRM_DELETE && it.resultCode == Activity.RESULT_OK){
+                    viewModel.delete()
+                }
+            }
+
         return binding.root
     }
 
@@ -56,19 +63,12 @@ class OutputFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.action_delete -> {
-                ConfirmationDialog.show(
-                    requireActivity()
-                        .getString(R.string.confirmation_message), this, CONFIRM_DELETE)
+                val action = OutputFragmentDirections.actionOutputToConfirmation(
+                    getString(R.string.confirmation_message), CONFIRM_DELETE)
+                findNavController().navigate(action)
                 true
             }
             else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == CONFIRM_DELETE && resultCode == Activity.RESULT_OK){
-            delete()
         }
     }
 
