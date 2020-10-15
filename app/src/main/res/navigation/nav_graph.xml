@@ -37,10 +37,6 @@
             android:id="@+id/action_history_to_confirmation"
             app:destination="@id/confirmation_dialog" />
     </fragment>
-    <action
-        android:id="@+id/action_global_to_history"
-        app:destination="@id/history_fragment"
-        app:popUpTo="@id/input_fragment"/>
     <dialog
         android:id="@+id/about_dialog"
         android:name="ca.tetervak.kittymessage6.ui.dialogs.AboutDialog"
@@ -65,4 +61,6 @@
         app:destination="@id/input_fragment"
         app:popUpTo="@id/input_fragment"
         app:popUpToInclusive="true" />
+    <action android:id="@+id/action_global_to_about"
+        app:destination="@id/about_dialog" />
 </navigation>

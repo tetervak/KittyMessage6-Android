@@ -38,8 +38,8 @@ class MainActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         return NavigationUI.onNavDestinationSelected(item, findNavController(R.id.nav_host)) ||
             when (item.itemId) {
-                R.id.action_history -> {
-                    findNavController(R.id.nav_host).navigate(R.id.action_global_to_history)
+                R.id.action_about -> {
+                    findNavController(R.id.nav_host).navigate(R.id.action_global_to_about)
                     true
                 }
             else -> super.onOptionsItemSelected(item)
