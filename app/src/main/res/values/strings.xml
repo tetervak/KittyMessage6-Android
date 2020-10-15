@@ -40,8 +40,13 @@
     <string name="history_fragment_label">History</string>
     <string name="settings_fragment_label">Settings</string>
 
-    <!-- the recycler view -->
+    <!-- the history fragment -->
     <string name="count">%1$d.</string>
+    <plurals name="history_total">
+        <item quantity="one">History Total: %1$d message</item>
+        <item quantity="other">History Total: %1$d messages</item>
+    </plurals>
+
 
     <!-- settings fragment -->
     <string name="default_message">Default Message</string>

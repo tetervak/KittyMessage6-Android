@@ -4,12 +4,13 @@ import android.app.Activity
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import ca.tetervak.kittymessage6.R
+import ca.tetervak.kittymessage6.database.Envelope
+import ca.tetervak.kittymessage6.databinding.FragmentHistoryBinding
 import ca.tetervak.kittymessage6.ui.dialogs.ConfirmationDialog
 import ca.tetervak.kittymessage6.ui.settings.KittySettings
 
@@ -21,6 +22,8 @@ class HistoryFragment : Fragment() {
     companion object{
         const val CONFIRM_CLEAR: Int = 2
     }
+
+    private lateinit var binding: FragmentHistoryBinding
 
     private lateinit var adapter: HistoryRecyclerViewAdapter
 
@@ -37,17 +40,19 @@ class HistoryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_history, container, false)
-        val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view)
+        // Inflate the layout for this fragment
+        binding = FragmentHistoryBinding.inflate(inflater, container, false)
 
-        recyclerView.addItemDecoration(
-            DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL))
+        // make the adapter
+        adapter = HistoryRecyclerViewAdapter(requireContext())
 
-        // Set the adapter
-        adapter = HistoryRecyclerViewAdapter(view.context)
-        recyclerView.adapter = adapter
+        with(binding){
+            val divider = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
+            recyclerView.addItemDecoration(divider)
+            recyclerView.adapter = adapter
+        }
 
-        viewModel.history.observe(viewLifecycleOwner){ adapter.history = it}
+        viewModel.history.observe(viewLifecycleOwner){ refreshHistory(it) }
 
         navController = findNavController()
 
@@ -60,7 +65,14 @@ class HistoryFragment : Fragment() {
                 }
             }
 
-        return view
+        return binding.root
+    }
+
+    private fun refreshHistory(list: List<Envelope>?) {
+        adapter.history = list
+        val count = list?.size ?: 0
+        binding.historyTotal.text =
+            resources.getQuantityString(R.plurals.history_total, count, count)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
