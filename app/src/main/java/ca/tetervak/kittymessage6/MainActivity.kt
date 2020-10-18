@@ -1,8 +1,6 @@
 package ca.tetervak.kittymessage6
 
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -38,12 +36,12 @@ class MainActivity : AppCompatActivity() {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_history -> {
-                findNavController(R.id.nav_host).navigate(R.id.action_global_to_history)
-                true
-            }
-            R.id.action_settings -> true
+        return NavigationUI.onNavDestinationSelected(item, findNavController(R.id.nav_host)) ||
+            when (item.itemId) {
+                R.id.action_about -> {
+                    findNavController(R.id.nav_host).navigate(R.id.action_global_to_about)
+                    true
+                }
             else -> super.onOptionsItemSelected(item)
         }
     }

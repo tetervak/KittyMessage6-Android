@@ -1,16 +1,37 @@
 package ca.tetervak.kittymessage6.ui.output
 
+import android.app.Activity
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import ca.tetervak.kittymessage6.R
 import ca.tetervak.kittymessage6.databinding.FragmentOutputBinding
+import ca.tetervak.kittymessage6.ui.dialogs.ConfirmationDialog.ConfirmationResult
+import ca.tetervak.kittymessage6.ui.dialogs.ConfirmationDialog.Companion.CONFIRMATION_RESULT
+import ca.tetervak.kittymessage6.ui.settings.KittySettings
 
 class OutputFragment : Fragment() {
+
+    companion object{
+        const val CONFIRM_DELETE: Int = 1
+    }
+
+    private val safeArgs: OutputFragmentArgs by navArgs()
+
+    private val viewModel: OutputViewModel by viewModels {
+        OutputViewModelFactory(safeArgs.envelopeId, requireActivity().application)
+    }
+
+    private lateinit var navController: NavController
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -20,25 +41,56 @@ class OutputFragment : Fragment() {
         val binding =
             FragmentOutputBinding.inflate(inflater, container, false)
 
-        // get the view model
-        val safeArgs: OutputFragmentArgs by navArgs()
-        val application = requireActivity().application
-        val factory = OutputViewModelFactory(safeArgs.envelopeId, application)
-        val viewModel: OutputViewModel by viewModels { factory }
-
-        viewModel.mailbox.observe(viewLifecycleOwner){
-            binding.envelope = it
-        }
+        // data-bind the viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
 
         binding.backButton.setOnClickListener { showInput() }
+
+        navController = findNavController()
+
+        // make the delete confirmation dialog work
+        val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
+        savedStateHandle?.getLiveData<ConfirmationResult>(CONFIRMATION_RESULT)
+            ?.observe(viewLifecycleOwner) {
+                if(it.requestCode == CONFIRM_DELETE && it.resultCode == Activity.RESULT_OK){
+                    delete()
+                }
+            }
 
         return binding.root
     }
 
-    private fun showInput(){
-        val action = OutputFragmentDirections.actionOutputToInput()
-        findNavController().navigate(action)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_output, menu)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            R.id.action_delete -> {
+                val settings = KittySettings(requireContext())
+                if(settings.confirmDelete){
+                    val action = OutputFragmentDirections.actionOutputToConfirmation(
+                        getString(R.string.confirm_delete_message), CONFIRM_DELETE)
+                    navController.navigate(action)
+                } else {
+                    delete()
+                }
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun delete(){
+        viewModel.delete()
+        showInput()
+    }
+
+    private fun showInput(){
+        val action = OutputFragmentDirections.actionGlobalToInput()
+        navController.navigate(action)
+    }
 
 }

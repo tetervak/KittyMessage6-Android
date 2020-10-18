@@ -1,20 +1,35 @@
 package ca.tetervak.kittymessage6.ui.history
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import ca.tetervak.kittymessage6.R
+import ca.tetervak.kittymessage6.database.Envelope
+import ca.tetervak.kittymessage6.databinding.FragmentHistoryBinding
+import ca.tetervak.kittymessage6.ui.dialogs.ConfirmationDialog
+import ca.tetervak.kittymessage6.ui.settings.KittySettings
 
 /**
  * A fragment representing a list of Items.
  */
 class HistoryFragment : Fragment() {
 
+    companion object{
+        const val CONFIRM_CLEAR: Int = 2
+    }
+
+    private lateinit var binding: FragmentHistoryBinding
+
     private lateinit var adapter: HistoryRecyclerViewAdapter
 
     private val viewModel: HistoryViewModel by viewModels()
+
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,16 +40,39 @@ class HistoryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_history, container, false)
+        // Inflate the layout for this fragment
+        binding = FragmentHistoryBinding.inflate(inflater, container, false)
 
-        // Set the adapter
-        val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view)
-        adapter = HistoryRecyclerViewAdapter(view.context)
-        recyclerView.adapter = adapter
+        // make the adapter
+        adapter = HistoryRecyclerViewAdapter(requireContext())
 
-        viewModel.history.observe(viewLifecycleOwner){ adapter.history = it}
+        with(binding){
+            val divider = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
+            recyclerView.addItemDecoration(divider)
+            recyclerView.adapter = adapter
+        }
 
-        return view
+        viewModel.history.observe(viewLifecycleOwner){ refreshHistory(it) }
+
+        navController = findNavController()
+
+        // make the delete confirmation dialog work
+        val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
+        savedStateHandle?.getLiveData<ConfirmationDialog.ConfirmationResult>(ConfirmationDialog.CONFIRMATION_RESULT)
+            ?.observe(viewLifecycleOwner) {
+                if(it.requestCode == CONFIRM_CLEAR && it.resultCode == Activity.RESULT_OK){
+                    clear()
+                }
+            }
+
+        return binding.root
+    }
+
+    private fun refreshHistory(list: List<Envelope>?) {
+        adapter.history = list
+        val count = list?.size ?: 0
+        binding.historyTotal.text =
+            resources.getQuantityString(R.plurals.history_total, count, count)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -45,10 +83,22 @@ class HistoryFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_clear -> {
-                viewModel.clear()
-                return true
+                val settings = KittySettings(requireContext())
+                if(settings.confirmClear){
+                    val action = HistoryFragmentDirections.actionHistoryToConfirmation(
+                        getString(R.string.confirm_clear_message), CONFIRM_CLEAR)
+                    navController.navigate(action)
+                } else {
+                    clear()
+                }
+                true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+    private fun clear(){
+        viewModel.clear()
+    }
+
 }

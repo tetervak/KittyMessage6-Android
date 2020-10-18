@@ -3,6 +3,7 @@ package ca.tetervak.kittymessage6.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.*
 
 @Entity(tableName = "envelopes")
 data class Envelope(
@@ -13,5 +14,8 @@ data class Envelope(
     val isUrgent: Boolean,
 
     @ColumnInfo(name = "text_message")
-    val textMessage: String
+    val textMessage: String,
+
+    @ColumnInfo(name = "time_stamp")
+    val timeStamp: Date
 )

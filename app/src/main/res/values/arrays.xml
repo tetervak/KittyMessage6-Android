@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- confirmation dialog -->
+    <string-array name="confirmation_dialog_entries">
+        <item>Remember, don\'t ask again.</item>
+    </string-array>
+
+    <!-- settings fragment -->
+    <string-array name="message_text_entries">
+        <item>@string/cat_purr</item>
+        <item>@string/cat_mew</item>
+        <item>@string/cat_hiss</item>
+    </string-array>
+
+</resources>

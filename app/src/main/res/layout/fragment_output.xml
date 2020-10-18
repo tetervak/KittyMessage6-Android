@@ -4,15 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="ca.tetervak.kittymessage6.ui.output.OutputViewModel"/>
+        <import type="ca.tetervak.kittymessage6.util.DateTimeStamp"/>
+
         <variable
-            name="envelope"
-            type="ca.tetervak.kittymessage6.database.Envelope"/>
+            name="viewModel"
+            type="OutputViewModel"/>
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/Yellow200"
         android:orientation="vertical"
         android:gravity="center_horizontal"
         tools:context=".ui.OutputFragment">
@@ -33,17 +35,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/gap0"
-            android:text="@{envelope.isUrgent ? @string/urgent : @string/not_urgent}"
+            android:text="@{viewModel.mailbox.urgent ? @string/urgent : @string/not_urgent}"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            tools:text="@string/undefined" />
+            tools:text="@string/urgent" />
 
         <TextView
             android:id="@+id/message_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{envelope.textMessage}"
+            android:text="@{viewModel.mailbox.textMessage}"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            tools:text="@string/undefined" />
+            tools:text="@string/cat_mew" />
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/gap1"
+            android:text="@{DateTimeStamp.formatDate(viewModel.mailbox.timeStamp)}"
+            tools:text="October 11, 2020" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{DateTimeStamp.formatTime(viewModel.mailbox.timeStamp)}"
+            tools:text="5PM:25:36" />
 
         <Button
             android:id="@+id/back_button"
