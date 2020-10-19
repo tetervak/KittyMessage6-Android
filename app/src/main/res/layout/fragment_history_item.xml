@@ -33,10 +33,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin"
-            android:text="@{envelope.urgent ? @string/urgent: @string/not_urgent}"
             android:textAppearance="?attr/textAppearanceListItem"
             app:layout_constraintBaseline_toBaselineOf="@id/count"
             app:layout_constraintStart_toEndOf="@id/count"
+            app:delivery="@{envelope.isUrgent}"
             tools:text="@string/urgent" />
 
         <TextView
@@ -44,10 +44,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/small_margin"
-            android:text="@{@stringArray/cat_messages[envelope.catMessage.ordinal]}"
             android:textAppearance="?attr/textAppearanceListItem"
             app:layout_constraintBaseline_toBaselineOf="@id/urgent"
             app:layout_constraintStart_toEndOf="@id/urgent"
+            app:message="@{envelope.catMessage}"
             tools:text="@string/cat_mew" />
 
         <TextView
@@ -56,10 +56,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/small_margin"
             android:layout_marginBottom="@dimen/margin"
-            android:text="@{DateTimeStamp.formatDateTime(envelope.date)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/urgent"
             app:layout_constraintTop_toBottomOf="@id/urgent"
+            app:date_time="@{envelope.date}"
             tools:text="Mon, Oct 12, 2020 - 4:14 PM" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
