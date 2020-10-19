@@ -49,12 +49,19 @@ class OutputFragment : Fragment() {
 
         navController = findNavController()
 
+        // show input page when the data is deleted from the database
+        viewModel.status.observe(viewLifecycleOwner){
+            if(it == OutputViewModel.Status.DELETED_DATA){
+                showInput()
+            }
+        }
+
         // make the delete confirmation dialog work
         val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
         savedStateHandle?.getLiveData<ConfirmationResult>(CONFIRMATION_RESULT)
             ?.observe(viewLifecycleOwner) {
                 if(it.requestCode == CONFIRM_DELETE && it.resultCode == Activity.RESULT_OK){
-                    delete()
+                    viewModel.delete()
                 }
             }
 
@@ -75,17 +82,12 @@ class OutputFragment : Fragment() {
                         getString(R.string.confirm_delete_message), CONFIRM_DELETE)
                     navController.navigate(action)
                 } else {
-                    delete()
+                    viewModel.delete()
                 }
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    private fun delete(){
-        viewModel.delete()
-        showInput()
     }
 
     private fun showInput(){

@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.preference.PreferenceManager
 import ca.tetervak.kittymessage6.R
 import ca.tetervak.kittymessage6.database.Envelope
 import ca.tetervak.kittymessage6.databinding.FragmentInputBinding
@@ -26,10 +25,11 @@ class InputFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentInputBinding.inflate(inflater, container, false)
 
-        binding.sendButton.setOnClickListener { send() }
+        binding.sendButton.setOnClickListener { save() }
 
-        viewModel.envelopeId.observe(viewLifecycleOwner){
-            if(it is Long) showOutput(it)
+        // show output when the data is saved in the database
+        viewModel.state.observe(viewLifecycleOwner){
+            if(it.status == InputViewModel.Status.SAVED_DATA) showOutput(it.envelopeId!!)
         }
 
         return binding.root
@@ -42,7 +42,7 @@ class InputFragment : Fragment() {
         readSettings()
     }
 
-    private fun send(){
+    private fun save(){
         // get urgent flag value
         val isUrgent: Boolean = binding.urgentCheckBox.isChecked
         // get the selected message text
@@ -52,7 +52,7 @@ class InputFragment : Fragment() {
             R.id.hiss_button -> getString(R.string.cat_hiss)
             else -> getString(R.string.undefined)
         }
-        viewModel.send(Envelope(0, isUrgent, textMessage, Date()))
+        viewModel.save(Envelope(0, isUrgent, textMessage, Date()))
     }
 
     private fun showOutput(envelopeId: Long) {

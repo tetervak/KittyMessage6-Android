@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/small_margin"
-            android:text="@{viewModel.mailbox.urgent ? @string/urgent : @string/not_urgent}"
+            android:text="@{viewModel.envelopeData.urgent ? @string/urgent : @string/not_urgent}"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             tools:text="@string/urgent" />
 
@@ -42,7 +42,7 @@
             android:id="@+id/message_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.mailbox.textMessage}"
+            android:text="@{viewModel.envelopeData.textMessage}"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             tools:text="@string/cat_mew" />
 
@@ -51,14 +51,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin"
-            android:text="@{DateTimeStamp.formatDate(viewModel.mailbox.timeStamp)}"
+            android:text="@{DateTimeStamp.formatDate(viewModel.envelopeData.timeStamp)}"
             tools:text="October 11, 2020" />
 
         <TextView
             android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{DateTimeStamp.formatTime(viewModel.mailbox.timeStamp)}"
+            android:text="@{DateTimeStamp.formatTime(viewModel.envelopeData.timeStamp)}"
             tools:text="5PM:25:36" />
 
         <Button

@@ -12,22 +12,28 @@ import kotlinx.coroutines.launch
 
 class InputViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _envelopeId = MutableLiveData<Long?>().apply{
-        value = null
+    enum class Status { NEW_DATA, SAVED_DATA }
+
+    data class State(val status: Status, val envelopeId: Long?);
+
+    companion object {
+        val INITIAL_SATE: State = State(Status.NEW_DATA, null)
     }
 
-    val envelopeId: LiveData<Long?> = _envelopeId
+    private val _state = MutableLiveData(INITIAL_SATE)
+    val state: LiveData<State> = _state
 
     private val envelopeDao: EnvelopeDao =
         EnvelopeDatabase.getInstance(application).envelopeDao
 
-    fun send(envelope: Envelope){
+    fun save(envelope: Envelope){
         viewModelScope.launch {
-            _envelopeId.value = envelopeDao.insert(envelope)
+            val envelopeId : Long = envelopeDao.insert(envelope)
+            _state.value = State(Status.SAVED_DATA, envelopeId)
         }
     }
 
     fun reset(){
-        _envelopeId.value = null
+        _state.value = INITIAL_SATE
     }
 }
