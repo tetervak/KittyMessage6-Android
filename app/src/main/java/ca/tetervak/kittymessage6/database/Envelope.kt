@@ -3,19 +3,21 @@ package ca.tetervak.kittymessage6.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import ca.tetervak.kittymessage6.domain.CatMessage
 import java.util.*
 
 @Entity(tableName = "envelopes")
 data class Envelope(
-    @PrimaryKey(autoGenerate = true)
-    var id: Long,
 
     @ColumnInfo(name = "is_urgent")
     val isUrgent: Boolean,
 
-    @ColumnInfo(name = "text_message")
-    val textMessage: String,
+    @ColumnInfo(name = "cat_message")
+    val catMessage: CatMessage,
 
-    @ColumnInfo(name = "time_stamp")
-    val timeStamp: Date
+    @ColumnInfo(name = "date")
+    val date: Date = Date(),
+
+    @PrimaryKey(autoGenerate = true)
+    var id: Long = 0L
 )

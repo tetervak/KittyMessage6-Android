@@ -42,7 +42,7 @@
             android:id="@+id/message_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.envelopeData.textMessage}"
+            android:text="@{@stringArray/cat_messages[viewModel.envelopeData.catMessage.ordinal]}"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             tools:text="@string/cat_mew" />
 
@@ -51,14 +51,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin"
-            android:text="@{DateTimeStamp.formatDate(viewModel.envelopeData.timeStamp)}"
+            android:text="@{DateTimeStamp.formatDate(viewModel.envelopeData.date)}"
             tools:text="October 11, 2020" />
 
         <TextView
             android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{DateTimeStamp.formatTime(viewModel.envelopeData.timeStamp)}"
+            android:text="@{DateTimeStamp.formatTime(viewModel.envelopeData.date)}"
             tools:text="5PM:25:36" />
 
         <Button

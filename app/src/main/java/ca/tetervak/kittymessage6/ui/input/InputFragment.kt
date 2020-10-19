@@ -10,8 +10,8 @@ import androidx.navigation.fragment.findNavController
 import ca.tetervak.kittymessage6.R
 import ca.tetervak.kittymessage6.database.Envelope
 import ca.tetervak.kittymessage6.databinding.FragmentInputBinding
+import ca.tetervak.kittymessage6.domain.CatMessage
 import ca.tetervak.kittymessage6.ui.settings.KittySettings
-import java.util.Date
 
 class InputFragment : Fragment() {
 
@@ -46,13 +46,13 @@ class InputFragment : Fragment() {
         // get urgent flag value
         val isUrgent: Boolean = binding.urgentCheckBox.isChecked
         // get the selected message text
-        val textMessage = when (binding.messageGroup.checkedRadioButtonId) {
-            R.id.purr_button -> getString(R.string.cat_purr)
-            R.id.mew_button -> getString(R.string.cat_mew)
-            R.id.hiss_button -> getString(R.string.cat_hiss)
-            else -> getString(R.string.undefined)
+        val catMessage: CatMessage = when (binding.messageGroup.checkedRadioButtonId) {
+            R.id.purr_button -> CatMessage.PURR
+            R.id.mew_button -> CatMessage.MEW
+            R.id.hiss_button -> CatMessage.HISS
+            else -> CatMessage.MEW
         }
-        viewModel.save(Envelope(0, isUrgent, textMessage, Date()))
+        viewModel.save(Envelope(isUrgent, catMessage))
     }
 
     private fun showOutput(envelopeId: Long) {

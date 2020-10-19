@@ -6,8 +6,8 @@
         <item>Remember, don\'t ask again.</item>
     </string-array>
 
-    <!-- settings fragment -->
-    <string-array name="message_text_entries">
+    <!-- output, history and settings fragments -->
+    <string-array name="cat_messages">
         <item>@string/cat_purr</item>
         <item>@string/cat_mew</item>
         <item>@string/cat_hiss</item>

@@ -12,8 +12,8 @@
 
         <ListPreference
             android:defaultValue="@string/cat_mew"
-            android:entries="@array/message_text_entries"
-            android:entryValues="@array/message_text_entries"
+            android:entries="@array/cat_messages"
+            android:entryValues="@array/cat_messages"
             android:key="message"
             android:title="@string/message_text"
             app:useSimpleSummaryProvider="true" />
