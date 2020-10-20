@@ -50,8 +50,8 @@ class OutputFragment : Fragment() {
         navController = findNavController()
 
         // show input page when the data is deleted from the database
-        viewModel.status.observe(viewLifecycleOwner){
-            if(it == OutputViewModel.Status.DELETED_DATA){
+        viewModel.state.observe(viewLifecycleOwner){
+            if(it.status == OutputViewModel.Status.DELETED_DATA){
                 showInput()
             }
         }

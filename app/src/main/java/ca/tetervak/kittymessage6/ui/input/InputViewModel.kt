@@ -17,10 +17,10 @@ class InputViewModel(application: Application) : AndroidViewModel(application) {
     data class State(val status: Status, val envelopeId: Long?);
 
     companion object {
-        val INITIAL_SATE: State = State(Status.NEW_DATA, null)
+        val NEW_DATA_SATE: State = State(Status.NEW_DATA, null)
     }
 
-    private val _state = MutableLiveData(INITIAL_SATE)
+    private val _state = MutableLiveData(NEW_DATA_SATE)
     val state: LiveData<State> = _state
 
     private val envelopeDao: EnvelopeDao =
@@ -34,6 +34,6 @@ class InputViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun reset(){
-        _state.value = INITIAL_SATE
+        _state.value = NEW_DATA_SATE
     }
 }

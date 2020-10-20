@@ -11,23 +11,29 @@ import ca.tetervak.kittymessage6.database.EnvelopeDatabase
 import kotlinx.coroutines.launch
 
 class OutputViewModel(
-    envelopeKey: Long, application: Application
+    envelopeId: Long, application: Application
 ) : AndroidViewModel(application) {
 
     enum class Status { SAVED_DATA, DELETED_DATA }
-    private val _status = MutableLiveData(Status.SAVED_DATA)
-    val status: LiveData<Status> = _status
+    data class State(val status: Status, val envelopeId: Long?)
+
+    companion object{
+        val DELETED_DATA_SATE: State = State(Status.DELETED_DATA, null)
+    }
+
+    private val _state = MutableLiveData(State(Status.SAVED_DATA, envelopeId))
+    val state: LiveData<State> = _state
 
     private val envelopeDao: EnvelopeDao =
         EnvelopeDatabase.getInstance(application).envelopeDao
 
-    val envelopeData: LiveData<Envelope> = envelopeDao.get(envelopeKey)
+    val envelopeData: LiveData<Envelope> = envelopeDao.get(envelopeId)
 
     fun delete(){
         envelopeData.value?.let{
             viewModelScope.launch {
                 envelopeDao.delete(it)
-                _status.value = Status.DELETED_DATA
+                _state.value = DELETED_DATA_SATE
             }
         }
     }
