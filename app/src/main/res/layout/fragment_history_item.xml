@@ -5,7 +5,6 @@
 
     <data>
         <import type="ca.tetervak.kittymessage6.database.Envelope"/>
-        <import type="ca.tetervak.kittymessage6.util.DateTimeStamp"/>
         <variable
             name="envelope"
             type="Envelope" />

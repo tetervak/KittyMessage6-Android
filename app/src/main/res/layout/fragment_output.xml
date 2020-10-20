@@ -5,7 +5,6 @@
 
     <data>
         <import type="ca.tetervak.kittymessage6.ui.output.OutputViewModel"/>
-        <import type="ca.tetervak.kittymessage6.util.DateTimeStamp"/>
 
         <variable
             name="viewModel"

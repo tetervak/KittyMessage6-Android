@@ -4,25 +4,25 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import ca.tetervak.kittymessage6.R
 import ca.tetervak.kittymessage6.domain.CatMessage
-import ca.tetervak.kittymessage6.util.DateTimeStamp
+import ca.tetervak.kittymessage6.util.*
 import java.util.*
 
 @BindingAdapter("app:date")
 fun bindDate(textView: TextView, date: Date?) {
     if (date is Date)
-        textView.text = DateTimeStamp.formatDate(date)
+        textView.text = formatDate(date)
 }
 
 @BindingAdapter("app:time")
 fun bindTime(textView: TextView, date: Date?) {
     if (date is Date)
-        textView.text = DateTimeStamp.formatTime(date)
+        textView.text = formatTime(date)
 }
 
 @BindingAdapter("app:date_time")
 fun bindDateTime(textView: TextView, date: Date?) {
     if (date is Date)
-        textView.text = DateTimeStamp.formatDateTime(date)
+        textView.text = formatDateTime(date)
 }
 
 @BindingAdapter("app:message")
