@@ -6,10 +6,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import ca.tetervak.kittymessage6.R
-import ca.tetervak.kittymessage6.database.Envelope
 import ca.tetervak.kittymessage6.databinding.FragmentHistoryItemBinding
+import ca.tetervak.kittymessage6.domain.Envelope
 
-class HistoryRecyclerViewAdapter(private val context: Context) : RecyclerView.Adapter<HistoryRecyclerViewAdapter.ViewHolder>() {
+class HistoryRecyclerViewAdapter() : RecyclerView.Adapter<HistoryRecyclerViewAdapter.ViewHolder>() {
 
     var history: List<Envelope>? = null
     set(value){

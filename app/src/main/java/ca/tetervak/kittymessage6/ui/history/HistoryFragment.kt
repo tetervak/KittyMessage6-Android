@@ -9,14 +9,11 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import ca.tetervak.kittymessage6.R
-import ca.tetervak.kittymessage6.database.Envelope
 import ca.tetervak.kittymessage6.databinding.FragmentHistoryBinding
+import ca.tetervak.kittymessage6.domain.Envelope
 import ca.tetervak.kittymessage6.ui.dialogs.ConfirmationDialog
 import ca.tetervak.kittymessage6.ui.settings.KittySettings
 
-/**
- * A fragment representing a list of Items.
- */
 class HistoryFragment : Fragment() {
 
     companion object{
@@ -44,7 +41,7 @@ class HistoryFragment : Fragment() {
         binding = FragmentHistoryBinding.inflate(inflater, container, false)
 
         // make the adapter
-        adapter = HistoryRecyclerViewAdapter(requireContext())
+        adapter = HistoryRecyclerViewAdapter()
 
         with(binding){
             val divider = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)

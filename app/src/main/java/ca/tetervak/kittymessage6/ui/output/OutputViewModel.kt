@@ -5,9 +5,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import ca.tetervak.kittymessage6.database.Envelope
-import ca.tetervak.kittymessage6.database.EnvelopeDao
-import ca.tetervak.kittymessage6.database.EnvelopeDatabase
+import ca.tetervak.kittymessage6.domain.Envelope
+import ca.tetervak.kittymessage6.repository.EnvelopeRepository
 import kotlinx.coroutines.launch
 
 class OutputViewModel(
@@ -24,15 +23,14 @@ class OutputViewModel(
     private val _state = MutableLiveData(State(Status.SAVED_DATA, envelopeId))
     val state: LiveData<State> = _state
 
-    private val envelopeDao: EnvelopeDao =
-        EnvelopeDatabase.getInstance(application).envelopeDao
+    private val repository: EnvelopeRepository = EnvelopeRepository(application)
 
-    val envelopeData: LiveData<Envelope> = envelopeDao.get(envelopeId)
+    val envelopeData: LiveData<Envelope> = repository.get(envelopeId)
 
     fun delete(){
         envelopeData.value?.let{
             viewModelScope.launch {
-                envelopeDao.delete(it)
+                repository.delete(it)
                 _state.value = DELETED_DATA_SATE
             }
         }

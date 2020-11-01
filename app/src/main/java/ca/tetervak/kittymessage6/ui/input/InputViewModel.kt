@@ -5,9 +5,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import ca.tetervak.kittymessage6.database.Envelope
-import ca.tetervak.kittymessage6.database.EnvelopeDao
-import ca.tetervak.kittymessage6.database.EnvelopeDatabase
+import ca.tetervak.kittymessage6.domain.Envelope
+import ca.tetervak.kittymessage6.repository.EnvelopeRepository
 import kotlinx.coroutines.launch
 
 class InputViewModel(application: Application) : AndroidViewModel(application) {
@@ -23,12 +22,11 @@ class InputViewModel(application: Application) : AndroidViewModel(application) {
     private val _state = MutableLiveData(NEW_DATA_SATE)
     val state: LiveData<State> = _state
 
-    private val envelopeDao: EnvelopeDao =
-        EnvelopeDatabase.getInstance(application).envelopeDao
+    private val repository: EnvelopeRepository = EnvelopeRepository(application)
 
     fun save(envelope: Envelope){
         viewModelScope.launch {
-            val envelopeId : Long = envelopeDao.insert(envelope)
+            val envelopeId : Long = repository.insert(envelope)
             _state.value = State(Status.SAVED_DATA, envelopeId)
         }
     }

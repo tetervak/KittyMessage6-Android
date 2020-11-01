@@ -4,21 +4,19 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import ca.tetervak.kittymessage6.database.Envelope
-import ca.tetervak.kittymessage6.database.EnvelopeDao
-import ca.tetervak.kittymessage6.database.EnvelopeDatabase
+import ca.tetervak.kittymessage6.domain.Envelope
+import ca.tetervak.kittymessage6.repository.EnvelopeRepository
 import kotlinx.coroutines.launch
 
 class HistoryViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val envelopeDao: EnvelopeDao =
-        EnvelopeDatabase.getInstance(application).envelopeDao
+    private val repository: EnvelopeRepository = EnvelopeRepository(application)
 
-    val history: LiveData<List<Envelope>> = envelopeDao.getAll()
+    val history: LiveData<List<Envelope>> = repository.getAll()
 
     fun clear(){
         viewModelScope.launch {
-            envelopeDao.deleteAll()
+            repository.deleteAll()
         }
     }
 
