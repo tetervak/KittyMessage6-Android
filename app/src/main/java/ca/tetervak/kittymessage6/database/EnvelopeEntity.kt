@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ca.tetervak.kittymessage6.domain.CatMessage
-import ca.tetervak.kittymessage6.domain.Envelope
 import java.util.*
 
 @Entity(tableName = "envelopes")

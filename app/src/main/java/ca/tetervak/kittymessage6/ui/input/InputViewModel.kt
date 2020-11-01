@@ -7,6 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import ca.tetervak.kittymessage6.domain.Envelope
 import ca.tetervak.kittymessage6.repository.EnvelopeRepository
+import ca.tetervak.kittymessage6.repository.EnvelopeRepositoryEntryPoint
+import dagger.hilt.android.EntryPointAccessors
 import kotlinx.coroutines.launch
 
 class InputViewModel(application: Application) : AndroidViewModel(application) {
@@ -22,7 +24,9 @@ class InputViewModel(application: Application) : AndroidViewModel(application) {
     private val _state = MutableLiveData(NEW_DATA_SATE)
     val state: LiveData<State> = _state
 
-    private val repository: EnvelopeRepository = EnvelopeRepository(application)
+    private val repository: EnvelopeRepository =
+        EntryPointAccessors.fromApplication(application,
+            EnvelopeRepositoryEntryPoint::class.java).envelopeRepository()
 
     fun save(envelope: Envelope){
         viewModelScope.launch {
