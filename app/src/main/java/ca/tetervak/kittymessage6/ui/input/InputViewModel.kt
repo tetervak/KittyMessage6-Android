@@ -11,23 +11,19 @@ class InputViewModel @ViewModelInject constructor(
 
     enum class Status { NEW_DATA, SAVED_DATA }
 
-    data class State(val status: Status, val envelopeId: Long?);
+    var envelopeId: Long? = null
 
-    companion object {
-        val NEW_DATA_SATE: State = State(Status.NEW_DATA, null)
-    }
-
-    private val _state = MutableLiveData(NEW_DATA_SATE)
-    val state: LiveData<State> = _state
+    private val _status = MutableLiveData(Status.NEW_DATA)
+    val status: LiveData<Status> = _status
 
     fun save(envelope: Envelope){
         viewModelScope.launch {
-            val envelopeId : Long = repository.insert(envelope)
-            _state.value = State(Status.SAVED_DATA, envelopeId)
+            envelopeId = repository.insert(envelope)
+            _status.value = Status.SAVED_DATA
         }
     }
 
     fun reset(){
-        _state.value = NEW_DATA_SATE
+        _status.value = Status.NEW_DATA
     }
 }

@@ -30,8 +30,8 @@ class InputFragment : Fragment() {
         binding.sendButton.setOnClickListener { save() }
 
         // show output when the data is saved in the database
-        viewModel.state.observe(viewLifecycleOwner){
-            if(it.status == InputViewModel.Status.SAVED_DATA) showOutput(it.envelopeId!!)
+        viewModel.status.observe(viewLifecycleOwner){
+            if(it == InputViewModel.Status.SAVED_DATA) showOutput(viewModel.envelopeId!!)
         }
 
         return binding.root

@@ -1,49 +1,34 @@
 package ca.tetervak.kittymessage6.ui.output
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.*
 import ca.tetervak.kittymessage6.domain.Envelope
 import ca.tetervak.kittymessage6.repository.EnvelopeRepository
-import dagger.hilt.EntryPoint
-import dagger.hilt.InstallIn
-import dagger.hilt.android.EntryPointAccessors
-import dagger.hilt.android.components.ApplicationComponent
 import kotlinx.coroutines.launch
 
-class OutputViewModel(
-    envelopeId: Long, application: Application
-) : AndroidViewModel(application) {
+class OutputViewModel @ViewModelInject constructor(
+    private val repository: EnvelopeRepository) : ViewModel() {
 
-    @EntryPoint
-    @InstallIn(ApplicationComponent::class)
-    interface EnvelopeRepositoryEntryPoint {
-        fun envelopeRepository(): EnvelopeRepository
+    enum class Status { NO_DATA, LOAD_DATA, DELETE_DATA }
+
+    private var _envelopeId = MutableLiveData<Long>()
+
+    private val _status = MutableLiveData(Status.NO_DATA)
+    val status: LiveData<Status> = _status
+
+    val envelopeData: LiveData<Envelope> =
+        Transformations.switchMap(_envelopeId){ repository.get(it) }
+
+    fun loadData(envelopeId: Long){
+        _envelopeId.value = envelopeId
+        _status.value = Status.LOAD_DATA
     }
-
-    enum class Status { SAVED_DATA, DELETED_DATA }
-    data class State(val status: Status, val envelopeId: Long?)
-
-    companion object{
-        val DELETED_DATA_SATE: State = State(Status.DELETED_DATA, null)
-    }
-
-    private val _state = MutableLiveData(State(Status.SAVED_DATA, envelopeId))
-    val state: LiveData<State> = _state
-
-    private val repository: EnvelopeRepository =
-        EntryPointAccessors.fromApplication(application,
-            EnvelopeRepositoryEntryPoint::class.java).envelopeRepository()
-
-    val envelopeData: LiveData<Envelope> = repository.get(envelopeId)
 
     fun delete(){
         envelopeData.value?.let{
             viewModelScope.launch {
                 repository.delete(it)
-                _state.value = DELETED_DATA_SATE
+                _status.value = Status.DELETE_DATA
             }
         }
     }

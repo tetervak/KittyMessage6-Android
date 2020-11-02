@@ -13,7 +13,9 @@ import ca.tetervak.kittymessage6.databinding.FragmentOutputBinding
 import ca.tetervak.kittymessage6.ui.dialogs.ConfirmationDialog.ConfirmationResult
 import ca.tetervak.kittymessage6.ui.dialogs.ConfirmationDialog.Companion.CONFIRMATION_RESULT
 import ca.tetervak.kittymessage6.ui.settings.KittySettings
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OutputFragment : Fragment() {
 
     companion object{
@@ -22,9 +24,7 @@ class OutputFragment : Fragment() {
 
     private val safeArgs: OutputFragmentArgs by navArgs()
 
-    private val viewModel: OutputViewModel by viewModels {
-        OutputViewModelFactory(safeArgs.envelopeId, requireActivity().application)
-    }
+    private val viewModel: OutputViewModel by viewModels()
 
     private lateinit var navController: NavController
 
@@ -41,6 +41,9 @@ class OutputFragment : Fragment() {
         val binding =
             FragmentOutputBinding.inflate(inflater, container, false)
 
+        // load the data into the viewModel
+        viewModel.loadData(safeArgs.envelopeId)
+
         // data-bind the viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
@@ -50,8 +53,8 @@ class OutputFragment : Fragment() {
         navController = findNavController()
 
         // show input page when the data is deleted from the database
-        viewModel.state.observe(viewLifecycleOwner){
-            if(it.status == OutputViewModel.Status.DELETED_DATA){
+        viewModel.status.observe(viewLifecycleOwner){
+            if(it == OutputViewModel.Status.DELETE_DATA){
                 showInput()
             }
         }
