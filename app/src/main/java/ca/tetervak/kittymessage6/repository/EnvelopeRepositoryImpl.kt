@@ -18,7 +18,7 @@ class EnvelopeRepositoryImpl @Inject constructor(database: EnvelopeDatabase) : E
     }
 
     override fun get(id: Long): LiveData<Envelope> {
-        return Transformations.map(envelopeDao.get(id)) { it.asEnvelope() }
+        return Transformations.map(envelopeDao.get(id)) { it?.asEnvelope() }
     }
 
     override fun getAll() : LiveData<List<Envelope>> {
