@@ -7,13 +7,21 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import ca.tetervak.kittymessage6.domain.Envelope
 import ca.tetervak.kittymessage6.repository.EnvelopeRepository
-import ca.tetervak.kittymessage6.repository.EnvelopeRepositoryEntryPoint
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.android.components.ApplicationComponent
 import kotlinx.coroutines.launch
 
 class OutputViewModel(
     envelopeId: Long, application: Application
 ) : AndroidViewModel(application) {
+
+    @EntryPoint
+    @InstallIn(ApplicationComponent::class)
+    interface EnvelopeRepositoryEntryPoint {
+        fun envelopeRepository(): EnvelopeRepository
+    }
 
     enum class Status { SAVED_DATA, DELETED_DATA }
     data class State(val status: Status, val envelopeId: Long?)
@@ -41,3 +49,4 @@ class OutputViewModel(
     }
 
 }
+

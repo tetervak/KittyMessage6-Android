@@ -13,7 +13,9 @@ import ca.tetervak.kittymessage6.databinding.FragmentHistoryBinding
 import ca.tetervak.kittymessage6.domain.Envelope
 import ca.tetervak.kittymessage6.ui.dialogs.ConfirmationDialog
 import ca.tetervak.kittymessage6.ui.settings.KittySettings
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HistoryFragment : Fragment() {
 
     companion object{

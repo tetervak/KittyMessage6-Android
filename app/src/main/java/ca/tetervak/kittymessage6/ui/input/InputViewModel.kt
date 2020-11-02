@@ -1,17 +1,13 @@
 package ca.tetervak.kittymessage6.ui.input
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.*
 import ca.tetervak.kittymessage6.domain.Envelope
 import ca.tetervak.kittymessage6.repository.EnvelopeRepository
-import ca.tetervak.kittymessage6.repository.EnvelopeRepositoryEntryPoint
-import dagger.hilt.android.EntryPointAccessors
 import kotlinx.coroutines.launch
 
-class InputViewModel(application: Application) : AndroidViewModel(application) {
+class InputViewModel @ViewModelInject constructor(
+    private val repository: EnvelopeRepository) : ViewModel() {
 
     enum class Status { NEW_DATA, SAVED_DATA }
 
@@ -23,10 +19,6 @@ class InputViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _state = MutableLiveData(NEW_DATA_SATE)
     val state: LiveData<State> = _state
-
-    private val repository: EnvelopeRepository =
-        EntryPointAccessors.fromApplication(application,
-            EnvelopeRepositoryEntryPoint::class.java).envelopeRepository()
 
     fun save(envelope: Envelope){
         viewModelScope.launch {

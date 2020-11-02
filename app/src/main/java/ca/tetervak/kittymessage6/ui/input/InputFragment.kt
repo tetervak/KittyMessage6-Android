@@ -12,7 +12,9 @@ import ca.tetervak.kittymessage6.databinding.FragmentInputBinding
 import ca.tetervak.kittymessage6.domain.CatMessage
 import ca.tetervak.kittymessage6.domain.EnvelopeDto
 import ca.tetervak.kittymessage6.ui.settings.KittySettings
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class InputFragment : Fragment() {
 
     private lateinit var binding: FragmentInputBinding

@@ -1,20 +1,17 @@
 package ca.tetervak.kittymessage6.ui.history
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ca.tetervak.kittymessage6.domain.Envelope
 import ca.tetervak.kittymessage6.repository.EnvelopeRepository
-import ca.tetervak.kittymessage6.repository.EnvelopeRepositoryEntryPoint
-import dagger.hilt.android.EntryPointAccessors
 import kotlinx.coroutines.launch
 
-class HistoryViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val repository: EnvelopeRepository =
-        EntryPointAccessors.fromApplication(application,
-            EnvelopeRepositoryEntryPoint::class.java).envelopeRepository()
+class HistoryViewModel @ViewModelInject constructor(
+    private val repository: EnvelopeRepository) : ViewModel() {
 
     val history: LiveData<List<Envelope>> = repository.getAll()
 
