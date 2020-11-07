@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import ca.tetervak.kittymessage6.R
 import ca.tetervak.kittymessage6.databinding.FragmentOutputBinding
+import ca.tetervak.kittymessage6.ui.dialogs.ConfirmationDialog
 import ca.tetervak.kittymessage6.ui.dialogs.ConfirmationDialog.ConfirmationResult
 import ca.tetervak.kittymessage6.ui.dialogs.ConfirmationDialog.Companion.CONFIRMATION_RESULT
 import ca.tetervak.kittymessage6.ui.settings.KittySettings
@@ -57,13 +58,11 @@ class OutputFragment : Fragment() {
         }
 
         // make the delete confirmation dialog work
-        val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
-        savedStateHandle?.getLiveData<ConfirmationResult>(CONFIRMATION_RESULT)
-            ?.observe(viewLifecycleOwner) {
-                if(it.requestCode == CONFIRM_DELETE && it.resultCode == Activity.RESULT_OK){
-                    viewModel.delete()
-                }
+        ConfirmationDialog.setResultListener(this, R.id.output_fragment) {
+            if (it?.requestCode == CONFIRM_DELETE && it.resultCode == Activity.RESULT_OK) {
+                viewModel.delete()
             }
+        }
 
         return binding.root
     }
