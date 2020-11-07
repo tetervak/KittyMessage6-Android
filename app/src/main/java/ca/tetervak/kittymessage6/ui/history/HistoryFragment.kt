@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -55,14 +57,11 @@ class HistoryFragment : Fragment() {
 
         navController = findNavController()
 
-        // make the delete confirmation dialog work
-        val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
-        savedStateHandle?.getLiveData<ConfirmationDialog.ConfirmationResult>(ConfirmationDialog.CONFIRMATION_RESULT)
-            ?.observe(viewLifecycleOwner) {
-                if(it.requestCode == CONFIRM_CLEAR && it.resultCode == Activity.RESULT_OK){
-                    clear()
-                }
+        ConfirmationDialog.setResultListener(this, R.id.history_fragment) {
+            if (it?.requestCode == CONFIRM_CLEAR && it.resultCode == Activity.RESULT_OK) {
+                clear()
             }
+        }
 
         return binding.root
     }
