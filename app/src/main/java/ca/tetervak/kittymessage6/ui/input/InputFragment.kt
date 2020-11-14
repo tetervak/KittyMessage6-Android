@@ -8,11 +8,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ca.tetervak.kittymessage6.R
-import ca.tetervak.kittymessage6.database.Envelope
 import ca.tetervak.kittymessage6.databinding.FragmentInputBinding
 import ca.tetervak.kittymessage6.domain.CatMessage
+import ca.tetervak.kittymessage6.domain.EnvelopeDto
 import ca.tetervak.kittymessage6.ui.settings.KittySettings
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class InputFragment : Fragment() {
 
     private lateinit var binding: FragmentInputBinding
@@ -28,8 +30,8 @@ class InputFragment : Fragment() {
         binding.sendButton.setOnClickListener { save() }
 
         // show output when the data is saved in the database
-        viewModel.state.observe(viewLifecycleOwner){
-            if(it.status == InputViewModel.Status.SAVED_DATA) showOutput(it.envelopeId!!)
+        viewModel.status.observe(viewLifecycleOwner){
+            if(it == InputViewModel.Status.SAVED_DATA) showOutput(viewModel.envelopeId!!)
         }
 
         return binding.root
@@ -52,7 +54,7 @@ class InputFragment : Fragment() {
             R.id.hiss_button -> CatMessage.HISS
             else -> CatMessage.MEW
         }
-        viewModel.save(Envelope(isUrgent, catMessage))
+        viewModel.save(EnvelopeDto(isUrgent, catMessage))
     }
 
     private fun showOutput(envelopeId: Long) {

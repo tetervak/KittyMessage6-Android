@@ -10,19 +10,19 @@ import androidx.room.Query
 interface EnvelopeDao {
 
     @Insert
-    suspend fun insert(envelope: Envelope): Long
+    suspend fun insert(envelope: EnvelopeEntity): Long
 
-    @Query("SELECT * FROM envelopes WHERE id=:key")
-    fun get(key: Long) : LiveData<Envelope>
+    @Query("SELECT * FROM envelopes WHERE id=:id")
+    fun get(id: Long) : LiveData<EnvelopeEntity>
 
     @Query("SELECT * FROM envelopes ORDER BY date DESC")
-    fun getAll() : LiveData<List<Envelope>>
+    fun getAll() : LiveData<List<EnvelopeEntity>>
 
     @Delete
-    suspend fun delete(envelope: Envelope)
+    suspend fun delete(envelope: EnvelopeEntity)
 
-    @Query("DELETE FROM envelopes WHERE id=:key")
-    suspend fun delete(key: Long)
+    @Query("DELETE FROM envelopes WHERE id=:id")
+    suspend fun delete(id: Long)
 
     @Query("DELETE FROM envelopes")
     suspend fun deleteAll()

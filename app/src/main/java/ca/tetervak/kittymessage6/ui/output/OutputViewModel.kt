@@ -1,41 +1,37 @@
 package ca.tetervak.kittymessage6.ui.output
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import ca.tetervak.kittymessage6.database.Envelope
-import ca.tetervak.kittymessage6.database.EnvelopeDao
-import ca.tetervak.kittymessage6.database.EnvelopeDatabase
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.*
+import ca.tetervak.kittymessage6.domain.Envelope
+import ca.tetervak.kittymessage6.repository.EnvelopeRepository
 import kotlinx.coroutines.launch
 
-class OutputViewModel(
-    envelopeId: Long, application: Application
-) : AndroidViewModel(application) {
+class OutputViewModel @ViewModelInject constructor(
+    private val repository: EnvelopeRepository) : ViewModel() {
 
-    enum class Status { SAVED_DATA, DELETED_DATA }
-    data class State(val status: Status, val envelopeId: Long?)
+    enum class Status { NO_DATA, LOAD_DATA, DELETE_DATA }
 
-    companion object{
-        val DELETED_DATA_SATE: State = State(Status.DELETED_DATA, null)
+    private var _envelopeId = MutableLiveData<Long>()
+
+    private val _status = MutableLiveData(Status.NO_DATA)
+    val status: LiveData<Status> = _status
+
+    val envelopeData: LiveData<Envelope> =
+        Transformations.switchMap(_envelopeId){ repository.get(it) }
+
+    fun loadData(envelopeId: Long){
+        _envelopeId.value = envelopeId
+        _status.value = Status.LOAD_DATA
     }
-
-    private val _state = MutableLiveData(State(Status.SAVED_DATA, envelopeId))
-    val state: LiveData<State> = _state
-
-    private val envelopeDao: EnvelopeDao =
-        EnvelopeDatabase.getInstance(application).envelopeDao
-
-    val envelopeData: LiveData<Envelope> = envelopeDao.get(envelopeId)
 
     fun delete(){
         envelopeData.value?.let{
             viewModelScope.launch {
-                envelopeDao.delete(it)
-                _state.value = DELETED_DATA_SATE
+                repository.delete(it)
+                _status.value = Status.DELETE_DATA
             }
         }
     }
 
 }
+

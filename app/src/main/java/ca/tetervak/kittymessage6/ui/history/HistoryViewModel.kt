@@ -1,24 +1,23 @@
 package ca.tetervak.kittymessage6.ui.history
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ca.tetervak.kittymessage6.database.Envelope
-import ca.tetervak.kittymessage6.database.EnvelopeDao
-import ca.tetervak.kittymessage6.database.EnvelopeDatabase
+import ca.tetervak.kittymessage6.domain.Envelope
+import ca.tetervak.kittymessage6.repository.EnvelopeRepository
 import kotlinx.coroutines.launch
 
-class HistoryViewModel(application: Application) : AndroidViewModel(application) {
+class HistoryViewModel @ViewModelInject constructor(
+    private val repository: EnvelopeRepository) : ViewModel() {
 
-    private val envelopeDao: EnvelopeDao =
-        EnvelopeDatabase.getInstance(application).envelopeDao
-
-    val history: LiveData<List<Envelope>> = envelopeDao.getAll()
+    val history: LiveData<List<Envelope>> = repository.getAll()
 
     fun clear(){
         viewModelScope.launch {
-            envelopeDao.deleteAll()
+            repository.deleteAll()
         }
     }
 

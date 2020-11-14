@@ -7,7 +7,7 @@ import ca.tetervak.kittymessage6.domain.CatMessage
 import java.util.*
 
 @Entity(tableName = "envelopes")
-data class Envelope(
+data class EnvelopeEntity(
 
     @ColumnInfo(name = "is_urgent")
     val isUrgent: Boolean,

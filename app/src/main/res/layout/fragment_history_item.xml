@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <import type="ca.tetervak.kittymessage6.database.Envelope"/>
+        <import type="ca.tetervak.kittymessage6.domain.Envelope"/>
         <variable
             name="envelope"
             type="Envelope" />
