@@ -1,21 +1,24 @@
 package ca.tetervak.kittymessage6.ui.settings
 
-import android.content.Context
+import android.app.Application
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import ca.tetervak.kittymessage6.R
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class KittySettings(private val context: Context){
+@Singleton
+class KittySettings @Inject constructor(private val application: Application){
 
     private val preferences: SharedPreferences =
-        PreferenceManager.getDefaultSharedPreferences(context)
+        PreferenceManager.getDefaultSharedPreferences(application)
 
     val urgent: Boolean
         get() = preferences.getBoolean("urgent", true)
 
     val messageText: String
         get(){
-            val mew = context.getString(R.string.cat_mew)
+            val mew = application.getString(R.string.cat_mew)
             return preferences.getString("message", mew) ?: mew
         }
 

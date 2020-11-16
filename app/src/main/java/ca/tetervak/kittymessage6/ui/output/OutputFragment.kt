@@ -12,6 +12,7 @@ import ca.tetervak.kittymessage6.databinding.FragmentOutputBinding
 import ca.tetervak.kittymessage6.ui.dialogs.ConfirmationDialog
 import ca.tetervak.kittymessage6.ui.settings.KittySettings
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class OutputFragment : Fragment() {
@@ -21,10 +22,11 @@ class OutputFragment : Fragment() {
     }
 
     private val safeArgs: OutputFragmentArgs by navArgs()
-
     private val viewModel: OutputViewModel by viewModels()
-
     private lateinit var navController: NavController
+
+    @Inject
+    lateinit var settings: KittySettings
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,7 +77,6 @@ class OutputFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.action_delete -> {
-                val settings = KittySettings(requireContext())
                 if(settings.confirmDelete){
                     val action = OutputFragmentDirections.actionOutputToConfirmation(
                         getString(R.string.confirm_delete_message), CONFIRM_DELETE)

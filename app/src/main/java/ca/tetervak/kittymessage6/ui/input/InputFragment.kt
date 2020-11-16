@@ -13,12 +13,16 @@ import ca.tetervak.kittymessage6.domain.CatMessage
 import ca.tetervak.kittymessage6.domain.EnvelopeDto
 import ca.tetervak.kittymessage6.ui.settings.KittySettings
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class InputFragment : Fragment() {
 
     private lateinit var binding: FragmentInputBinding
     private val viewModel: InputViewModel by viewModels()
+
+    @Inject
+    lateinit var settings: KittySettings
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,8 +70,6 @@ class InputFragment : Fragment() {
     }
 
     private fun readSettings(){
-
-        val settings = KittySettings(requireContext())
 
         binding.urgentCheckBox.isChecked = settings.urgent
 

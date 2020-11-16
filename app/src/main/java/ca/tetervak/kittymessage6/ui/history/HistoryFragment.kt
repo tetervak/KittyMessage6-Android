@@ -13,6 +13,7 @@ import ca.tetervak.kittymessage6.domain.Envelope
 import ca.tetervak.kittymessage6.ui.dialogs.ConfirmationDialog
 import ca.tetervak.kittymessage6.ui.settings.KittySettings
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class HistoryFragment : Fragment() {
@@ -22,12 +23,12 @@ class HistoryFragment : Fragment() {
     }
 
     private lateinit var binding: FragmentHistoryBinding
-
     private lateinit var adapter: HistoryRecyclerViewAdapter
-
     private val viewModel: HistoryViewModel by viewModels()
-
     private lateinit var navController: NavController
+
+    @Inject
+    lateinit var settings: KittySettings
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,7 +79,6 @@ class HistoryFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_clear -> {
-                val settings = KittySettings(requireContext())
                 if(settings.confirmClear){
                     val action = HistoryFragmentDirections.actionHistoryToConfirmation(
                         getString(R.string.confirm_clear_message), CONFIRM_CLEAR)
