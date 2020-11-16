@@ -1,12 +1,9 @@
 package ca.tetervak.kittymessage6.ui.history
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -58,7 +55,7 @@ class HistoryFragment : Fragment() {
         navController = findNavController()
 
         ConfirmationDialog.setResultListener(this, R.id.history_fragment) {
-            if (it?.requestCode == CONFIRM_CLEAR && it.resultCode == Activity.RESULT_OK) {
+            if (it?.requestCode == CONFIRM_CLEAR) {
                 clear()
             }
         }

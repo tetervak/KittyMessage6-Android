@@ -1,6 +1,5 @@
 package ca.tetervak.kittymessage6.ui.output
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -11,8 +10,6 @@ import androidx.navigation.fragment.navArgs
 import ca.tetervak.kittymessage6.R
 import ca.tetervak.kittymessage6.databinding.FragmentOutputBinding
 import ca.tetervak.kittymessage6.ui.dialogs.ConfirmationDialog
-import ca.tetervak.kittymessage6.ui.dialogs.ConfirmationDialog.ConfirmationResult
-import ca.tetervak.kittymessage6.ui.dialogs.ConfirmationDialog.Companion.CONFIRMATION_RESULT
 import ca.tetervak.kittymessage6.ui.settings.KittySettings
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -62,7 +59,7 @@ class OutputFragment : Fragment() {
 
         // make the delete confirmation dialog work
         ConfirmationDialog.setResultListener(this, R.id.output_fragment) {
-            if (it?.requestCode == CONFIRM_DELETE && it.resultCode == Activity.RESULT_OK) {
+            if (it?.requestCode == CONFIRM_DELETE) {
                 viewModel.delete()
             }
         }

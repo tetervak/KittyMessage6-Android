@@ -1,6 +1,5 @@
 package ca.tetervak.kittymessage6.ui.dialogs
 
-import android.app.Activity
 import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
@@ -16,7 +15,9 @@ import java.io.Serializable
 
 class ConfirmationDialog : DialogFragment() {
 
-    data class ConfirmationResult(val requestCode: Int, val resultCode: Int) : Serializable
+    data class ConfirmationResult(
+        val requestCode: Int
+    ) : Serializable
 
     companion object {
         const val CONFIRMATION_RESULT = "confirmation_result"
@@ -65,7 +66,7 @@ class ConfirmationDialog : DialogFragment() {
     private fun confirmed() {
         val savedStateHandle = navController.previousBackStackEntry?.savedStateHandle
         savedStateHandle?.set(
-            CONFIRMATION_RESULT, ConfirmationResult(safeArgs.requestCode, Activity.RESULT_OK)
+            CONFIRMATION_RESULT, ConfirmationResult(safeArgs.requestCode)
         )
     }
 
