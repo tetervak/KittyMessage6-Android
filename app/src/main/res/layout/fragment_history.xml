@@ -17,9 +17,16 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin"
             android:layout_marginTop="@dimen/margin"
+            android:layout_marginBottom="@dimen/small_margin"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            tools:text="History Total: 15 messages"
-            tools:ignore="RtlHardcoded" />
+            tools:ignore="RtlHardcoded"
+            tools:text="History Total: 15 messages" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
