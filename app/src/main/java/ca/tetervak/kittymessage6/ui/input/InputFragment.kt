@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import ca.tetervak.kittymessage6.R
 import ca.tetervak.kittymessage6.databinding.FragmentInputBinding
 import ca.tetervak.kittymessage6.domain.CatMessage
-import ca.tetervak.kittymessage6.domain.EnvelopeDto
+import ca.tetervak.kittymessage6.domain.Envelope
 import ca.tetervak.kittymessage6.ui.settings.KittySettings
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -58,7 +58,7 @@ class InputFragment : Fragment() {
             R.id.hiss_button -> CatMessage.HISS
             else -> CatMessage.MEW
         }
-        viewModel.save(EnvelopeDto(isUrgent, catMessage))
+        viewModel.save(Envelope(isUrgent, catMessage))
     }
 
     private fun showOutput(envelopeId: Long) {

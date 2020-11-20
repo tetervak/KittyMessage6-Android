@@ -1,10 +1,10 @@
 package ca.tetervak.kittymessage6.domain
 
-import java.util.*
+import java.util.Date
 
-interface Envelope {
-    val isUrgent: Boolean
-    val catMessage: CatMessage
-    val date: Date
-    val id: Long
-}
+data class Envelope(
+    val isUrgent: Boolean,
+    val catMessage: CatMessage,
+    val date: Date = Date(),
+    val id: Long = 0L
+)

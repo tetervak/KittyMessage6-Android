@@ -6,7 +6,6 @@ import ca.tetervak.kittymessage6.database.EnvelopeDao
 import ca.tetervak.kittymessage6.database.EnvelopeDatabase
 import ca.tetervak.kittymessage6.database.EnvelopeEntity
 import ca.tetervak.kittymessage6.domain.Envelope
-import ca.tetervak.kittymessage6.domain.EnvelopeDto
 import javax.inject.Inject
 
 class EnvelopeRepositoryImpl @Inject constructor(database: EnvelopeDatabase) : EnvelopeRepository {
@@ -43,5 +42,5 @@ fun Envelope.asEntity(): EnvelopeEntity{
 }
 
 fun EnvelopeEntity.asEnvelope(): Envelope{
-    return EnvelopeDto(isUrgent, catMessage, date, id)
+    return Envelope(isUrgent, catMessage, date, id)
 }
