@@ -5,6 +5,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import ca.tetervak.kittymessage6.R
@@ -42,8 +43,15 @@ class HistoryFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentHistoryBinding.inflate(inflater, container, false)
 
+        navController = findNavController()
+
         // make the adapter
-        adapter = HistoryListAdapter()
+        adapter = HistoryListAdapter(
+            onClick = {
+                navController.navigate(HistoryFragmentDirections.actionHistoryToOutput(it.id))
+            },
+            onDelete = {}
+        )
 
         with(binding){
             val divider = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
@@ -52,8 +60,6 @@ class HistoryFragment : Fragment() {
         }
 
         viewModel.history.observe(viewLifecycleOwner){ refreshHistory(it) }
-
-        navController = findNavController()
 
         ConfirmationDialog.setResultListener(this, R.id.history_fragment) {
             if (it?.requestCode == CONFIRM_CLEAR) {

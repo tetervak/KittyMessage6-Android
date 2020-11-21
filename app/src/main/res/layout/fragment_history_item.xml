@@ -61,5 +61,17 @@
             app:date_time="@{envelope.date}"
             tools:text="Mon, Oct 12, 2020 - 4:14 PM" />
 
+        <ImageButton
+            android:id="@+id/delete_button"
+            style="@android:style/Widget.DeviceDefault.Light.ImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/delete_envelope"
+            android:padding="4dp"
+            android:background="@null"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_close" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
