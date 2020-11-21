@@ -23,7 +23,7 @@ class HistoryFragment : Fragment() {
     }
 
     private lateinit var binding: FragmentHistoryBinding
-    private lateinit var adapter: HistoryRecyclerViewAdapter
+    private lateinit var adapter: HistoryListAdapter
     private val viewModel: HistoryViewModel by viewModels()
     private lateinit var navController: NavController
 
@@ -43,7 +43,7 @@ class HistoryFragment : Fragment() {
         binding = FragmentHistoryBinding.inflate(inflater, container, false)
 
         // make the adapter
-        adapter = HistoryRecyclerViewAdapter()
+        adapter = HistoryListAdapter()
 
         with(binding){
             val divider = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
@@ -65,7 +65,7 @@ class HistoryFragment : Fragment() {
     }
 
     private fun refreshHistory(list: List<Envelope>?) {
-        adapter.history = list
+        adapter.submitList(list)
         val count = list?.size ?: 0
         binding.historyTotal.text =
             resources.getQuantityString(R.plurals.history_total, count, count)
