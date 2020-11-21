@@ -29,7 +29,7 @@
     <!-- button labels -->
     <string name="reset">Reset</string>
     <string name="send">Send</string>
-    <string name="back">Back</string>
+    <string name="input">Input</string>
 
     <!-- floating label -->
     <string name="sheridan">Sheridan, 2020</string>
@@ -46,7 +46,7 @@
         <item quantity="one">History Total: %1$d message</item>
         <item quantity="other">History Total: %1$d messages</item>
     </plurals>
-
+    <string name="delete_envelope">delete envelope</string>
 
     <!-- settings fragment -->
     <string name="default_message">Default Message</string>
@@ -63,5 +63,6 @@
     <!-- confirmation dialog -->
     <string name="confirm_delete_message">Do you want to remove this message?</string>
     <string name="confirm_clear_message">Do you want to clear the history?</string>
+
 
 </resources>

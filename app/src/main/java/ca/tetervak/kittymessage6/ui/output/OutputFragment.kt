@@ -48,7 +48,7 @@ class OutputFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        binding.backButton.setOnClickListener { showInput() }
+        binding.inputButton.setOnClickListener { showInput() }
 
         navController = findNavController()
 
