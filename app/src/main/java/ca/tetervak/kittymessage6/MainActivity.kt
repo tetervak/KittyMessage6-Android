@@ -5,15 +5,18 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
+import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupWithNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,10 +25,17 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         // make the navigation work with the toolbar
-        val navController =
-            Navigation.findNavController(this, R.id.nav_host)
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
-        toolbar.setupWithNavController(navController, appBarConfiguration)
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
+        appBarConfiguration = AppBarConfiguration(navController.graph)
+        setupActionBarWithNavController(navController, appBarConfiguration)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment)
+        return navController.navigateUp(appBarConfiguration)
+                || super.onSupportNavigateUp()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -38,10 +48,10 @@ class MainActivity : AppCompatActivity() {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        return NavigationUI.onNavDestinationSelected(item, findNavController(R.id.nav_host)) ||
+        return NavigationUI.onNavDestinationSelected(item, navController) ||
             when (item.itemId) {
                 R.id.action_about -> {
-                    findNavController(R.id.nav_host).navigate(R.id.action_global_to_about)
+                    navController.navigate(R.id.action_global_to_about)
                     true
                 }
             else -> super.onOptionsItemSelected(item)
