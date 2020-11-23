@@ -4,6 +4,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import ca.tetervak.kittymessage6.domain.Envelope
 import ca.tetervak.kittymessage6.repository.EnvelopeRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class InputViewModel @ViewModelInject constructor(
@@ -17,7 +18,7 @@ class InputViewModel @ViewModelInject constructor(
     val status: LiveData<Status> = _status
 
     fun save(envelope: Envelope){
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             envelopeId = repository.insert(envelope)
             _status.value = Status.SAVED_DATA
         }

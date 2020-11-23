@@ -4,6 +4,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import ca.tetervak.kittymessage6.domain.Envelope
 import ca.tetervak.kittymessage6.repository.EnvelopeRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class OutputViewModel @ViewModelInject constructor(
@@ -26,7 +27,7 @@ class OutputViewModel @ViewModelInject constructor(
 
     fun delete(){
         envelopeData.value?.let{
-            viewModelScope.launch {
+            viewModelScope.launch(Dispatchers.IO) {
                 repository.delete(it)
                 _status.value = Status.DELETE_DATA
             }
