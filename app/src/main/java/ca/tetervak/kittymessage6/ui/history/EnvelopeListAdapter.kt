@@ -9,10 +9,10 @@ import ca.tetervak.kittymessage6.R
 import ca.tetervak.kittymessage6.databinding.FragmentHistoryItemBinding
 import ca.tetervak.kittymessage6.domain.Envelope
 
-class HistoryListAdapter(
+class EnvelopeListAdapter(
     private val onClick: (Envelope) -> Unit,
     private val onDelete: (Envelope) -> Unit
-    ): ListAdapter<Envelope, HistoryListAdapter.ViewHolder>(EnvelopeDiffCallback()) {
+    ): ListAdapter<Envelope, EnvelopeListAdapter.ViewHolder>(EnvelopeDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)

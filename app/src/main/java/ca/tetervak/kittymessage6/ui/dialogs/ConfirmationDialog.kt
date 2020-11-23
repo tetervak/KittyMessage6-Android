@@ -16,7 +16,8 @@ import java.io.Serializable
 class ConfirmationDialog : DialogFragment() {
 
     data class ConfirmationResult(
-        val requestCode: Int
+        val requestCode: Int,
+        val id: Long
     ) : Serializable
 
     companion object {
@@ -66,7 +67,7 @@ class ConfirmationDialog : DialogFragment() {
     private fun confirmed() {
         val savedStateHandle = navController.previousBackStackEntry?.savedStateHandle
         savedStateHandle?.set(
-            CONFIRMATION_RESULT, ConfirmationResult(safeArgs.requestCode)
+            CONFIRMATION_RESULT, ConfirmationResult(safeArgs.requestCode, safeArgs.id)
         )
     }
 

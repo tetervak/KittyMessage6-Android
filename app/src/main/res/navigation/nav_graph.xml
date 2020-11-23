@@ -55,6 +55,10 @@
         <argument
             android:name="requestCode"
             app:argType="integer" />
+        <argument
+            android:name="id"
+            app:argType="long"
+            android:defaultValue="0L" />
     </dialog>
     <action
         android:id="@+id/action_global_to_input"

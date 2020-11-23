@@ -5,12 +5,10 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import ca.tetervak.kittymessage6.R
 import ca.tetervak.kittymessage6.databinding.FragmentHistoryBinding
-import ca.tetervak.kittymessage6.domain.Envelope
 import ca.tetervak.kittymessage6.ui.dialogs.ConfirmationDialog
 import ca.tetervak.kittymessage6.ui.settings.KittySettings
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,11 +18,11 @@ import javax.inject.Inject
 class HistoryFragment : Fragment() {
 
     companion object{
-        const val CONFIRM_CLEAR: Int = 2
+        const val CONFIRM_CLEAR_ALL: Int = 1
+        const val CONFIRM_DELETE_ITEM: Int = 2
     }
 
     private lateinit var binding: FragmentHistoryBinding
-    private lateinit var adapter: HistoryListAdapter
     private val viewModel: HistoryViewModel by viewModels()
     private lateinit var navController: NavController
 
@@ -46,35 +44,36 @@ class HistoryFragment : Fragment() {
         navController = findNavController()
 
         // make the adapter
-        adapter = HistoryListAdapter(
+        val adapter = EnvelopeListAdapter(
             onClick = {
                 navController.navigate(HistoryFragmentDirections.actionHistoryToOutput(it.id))
             },
-            onDelete = {}
+            onDelete = {
+                if(settings.confirmDelete){
+                    val action = HistoryFragmentDirections.actionHistoryToConfirmation(
+                        getString(R.string.confirm_delete_message), CONFIRM_DELETE_ITEM, it.id)
+                    navController.navigate(action)
+                }else{
+                    viewModel.delete(it)
+                }
+            }
         )
 
-        with(binding){
-            val divider = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
-            recyclerView.addItemDecoration(divider)
-            recyclerView.adapter = adapter
-        }
+        val divider = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
+        binding.recyclerView.addItemDecoration(divider)
+        binding.recyclerView.adapter = adapter
 
-        viewModel.history.observe(viewLifecycleOwner){ refreshHistory(it) }
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
 
         ConfirmationDialog.setResultListener(this, R.id.history_fragment) {
-            if (it?.requestCode == CONFIRM_CLEAR) {
-                clear()
+            when (it?.requestCode) {
+                CONFIRM_CLEAR_ALL -> { viewModel.clear() }
+                CONFIRM_DELETE_ITEM -> { viewModel.delete(it.id) }
             }
         }
 
         return binding.root
-    }
-
-    private fun refreshHistory(list: List<Envelope>?) {
-        adapter.submitList(list)
-        val count = list?.size ?: 0
-        binding.historyTotal.text =
-            resources.getQuantityString(R.plurals.history_total, count, count)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -87,19 +86,15 @@ class HistoryFragment : Fragment() {
             R.id.action_clear -> {
                 if(settings.confirmClear){
                     val action = HistoryFragmentDirections.actionHistoryToConfirmation(
-                        getString(R.string.confirm_clear_message), CONFIRM_CLEAR)
+                        getString(R.string.confirm_clear_message), CONFIRM_CLEAR_ALL)
                     navController.navigate(action)
                 } else {
-                    clear()
+                    viewModel.clear()
                 }
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    private fun clear(){
-        viewModel.clear()
     }
 
 }
