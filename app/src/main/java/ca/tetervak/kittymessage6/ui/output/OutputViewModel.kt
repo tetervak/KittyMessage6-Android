@@ -29,7 +29,7 @@ class OutputViewModel @ViewModelInject constructor(
         envelopeData.value?.let{
             viewModelScope.launch(Dispatchers.IO) {
                 repository.delete(it)
-                _status.value = Status.DELETE_DATA
+                _status.postValue(Status.DELETE_DATA)
             }
         }
     }

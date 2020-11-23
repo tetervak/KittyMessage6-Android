@@ -18,9 +18,9 @@ class InputViewModel @ViewModelInject constructor(
     val status: LiveData<Status> = _status
 
     fun save(envelope: Envelope){
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.IO){
             envelopeId = repository.insert(envelope)
-            _status.value = Status.SAVED_DATA
+            _status.postValue(Status.SAVED_DATA)
         }
     }
 
