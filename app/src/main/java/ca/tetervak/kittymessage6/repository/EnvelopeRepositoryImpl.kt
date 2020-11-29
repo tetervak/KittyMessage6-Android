@@ -6,6 +6,8 @@ import ca.tetervak.kittymessage6.database.EnvelopeDao
 import ca.tetervak.kittymessage6.database.EnvelopeDatabase
 import ca.tetervak.kittymessage6.database.EnvelopeEntity
 import ca.tetervak.kittymessage6.domain.Envelope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class EnvelopeRepositoryImpl @Inject constructor(database: EnvelopeDatabase) : EnvelopeRepository {
@@ -16,12 +18,20 @@ class EnvelopeRepositoryImpl @Inject constructor(database: EnvelopeDatabase) : E
         return envelopeDao.insert(envelope.asEntity())
     }
 
-    override fun get(id: Long): LiveData<Envelope> {
-        return Transformations.map(envelopeDao.get(id)) { it?.asEnvelope() }
+//    override fun get(id: Long): LiveData<Envelope> {
+//        return Transformations.map(envelopeDao.get(id)) { it?.asEnvelope() }
+//    }
+
+    override fun getFlow(id: Long): Flow<Envelope> {
+        return envelopeDao.getFlow(id).map { it.asEnvelope() }
     }
 
-    override fun getAll() : LiveData<List<Envelope>> {
-        return Transformations.map(envelopeDao.getAll()) { list -> list.map { it.asEnvelope() }}
+//    override fun getAll() : LiveData<List<Envelope>> {
+//        return Transformations.map(envelopeDao.getAll()) { list -> list.map { it.asEnvelope() }}
+//    }
+
+    override fun getAllFlow() : Flow<List<Envelope>> {
+        return envelopeDao.getAllFlow().map { list -> list.map { it.asEnvelope() }}
     }
 
     override suspend fun delete(envelope: Envelope){

@@ -18,7 +18,8 @@ class OutputViewModel @ViewModelInject constructor(
     val status: LiveData<Status> = _status
 
     val envelopeData: LiveData<Envelope> =
-        envelopeId.switchMap{ repository.get(it) }
+        // envelopeId.switchMap{ repository.get(it) }
+        envelopeId.switchMap{ repository.getFlow(it).asLiveData() }
 
     fun loadData(id: Long){
         envelopeId.value = id

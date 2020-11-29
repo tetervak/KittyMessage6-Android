@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface EnvelopeDao {
@@ -12,11 +13,17 @@ interface EnvelopeDao {
     @Insert
     suspend fun insert(envelope: EnvelopeEntity): Long
 
+//    @Query("SELECT * FROM envelopes WHERE id=:id")
+//    fun get(id: Long) : LiveData<EnvelopeEntity>
+
     @Query("SELECT * FROM envelopes WHERE id=:id")
-    fun get(id: Long) : LiveData<EnvelopeEntity>
+    fun getFlow(id: Long): Flow<EnvelopeEntity>
+
+//    @Query("SELECT * FROM envelopes ORDER BY date DESC")
+//    fun getAll() : LiveData<List<EnvelopeEntity>>
 
     @Query("SELECT * FROM envelopes ORDER BY date DESC")
-    fun getAll() : LiveData<List<EnvelopeEntity>>
+    fun getAllFlow() : Flow<List<EnvelopeEntity>>
 
     @Delete
     suspend fun delete(envelope: EnvelopeEntity)
