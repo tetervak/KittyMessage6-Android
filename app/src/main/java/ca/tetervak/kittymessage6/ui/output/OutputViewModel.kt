@@ -12,16 +12,16 @@ class OutputViewModel @ViewModelInject constructor(
 
     enum class Status { NO_DATA, LOAD_DATA, DELETE_DATA }
 
-    private var _envelopeId = MutableLiveData<Long>()
+    private var envelopeId = MutableLiveData<Long>()
 
     private val _status = MutableLiveData(Status.NO_DATA)
     val status: LiveData<Status> = _status
 
     val envelopeData: LiveData<Envelope> =
-        Transformations.switchMap(_envelopeId){ repository.get(it) }
+        envelopeId.switchMap{ repository.get(it) }
 
-    fun loadData(envelopeId: Long){
-        _envelopeId.value = envelopeId
+    fun loadData(id: Long){
+        envelopeId.value = id
         _status.value = Status.LOAD_DATA
     }
 
